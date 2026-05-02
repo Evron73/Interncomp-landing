@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intercomp AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf7f2;--warm:#f5f0e8;--sand:#e8dfc8;
+  --ink:#1a1a2e;--navy:#0f2d4a;
+  --teal:#1a6b5a;--teal2:#2a9e7f;--teal-pale:#e8f5f0;
+  --gold:#c4922a;--gold2:#f0c96a;
+  --muted:#6b6a66;--border:#ddd8cc;
+  --shadow:rgba(26,26,46,0.08);
+  --red:#c0392b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--teal2);border-radius:2px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.94);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:all 0.3s;}
+nav.scrolled{border-bottom-color:var(--border);box-shadow:0 2px 24px var(--shadow);}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-mark{width:36px;height:36px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;}
+.nav-name{font-weight:600;font-size:13px;letter-spacing:0.05em;text-transform:uppercase;color:var(--navy);}
+.nav-right{display:flex;align-items:center;gap:16px;}
+
+/* Lang toggle — only HU/EN */
+.lang-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.lang-btn-opt{padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;background:white;color:var(--muted);border:none;display:flex;align-items:center;gap:6px;}
+.lang-btn-opt.active{background:var(--teal);color:white;}
+.lang-btn-opt:hover:not(.active){background:var(--teal-pale);color:var(--teal);}
+
+.nav-cta{padding:9px 22px;background:var(--teal);color:white;font-size:12px;font-weight:600;letter-spacing:0.05em;text-decoration:none;border-radius:6px;transition:all 0.2s;text-transform:uppercase;}
+.nav-cta:hover{background:var(--teal2);transform:translateY(-1px);}
+.nav-esg{padding:9px 16px;border:1.5px solid var(--teal);color:var(--teal);font-size:12px;font-weight:600;text-decoration:none;border-radius:6px;transition:all 0.2s;}
+.nav-esg:hover{background:var(--teal-pale);}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;padding:110px 48px 60px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;top:-10%;right:-5%;width:55%;height:110%;background:linear-gradient(145deg,var(--teal),var(--navy));border-radius:40% 0 0 35%;opacity:0.07;z-index:0;}
+.hero-dots{position:absolute;top:15%;left:5%;width:180px;height:180px;background-image:radial-gradient(var(--sand) 1.5px,transparent 1.5px);background-size:18px 18px;opacity:0.6;z-index:0;}
+.hero-left{position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:var(--teal-pale);border:1px solid rgba(26,107,90,0.2);border-radius:100px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);margin-bottom:28px;opacity:0;animation:fadeUp 0.6s ease 0.1s forwards;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal2);animation:pulse 2s infinite;}
+h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(36px,4.5vw,62px);line-height:1.12;color:var(--navy);margin-bottom:24px;opacity:0;animation:fadeUp 0.8s ease 0.25s forwards;}
+h1 em{font-style:italic;color:var(--teal);}
+h1 .accent{color:var(--gold);}
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.8;max-width:440px;margin-bottom:36px;opacity:0;animation:fadeUp 0.8s ease 0.4s forwards;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 0.55s forwards;}
+.btn-p{padding:13px 30px;background:var(--teal);color:white;font-size:13px;font-weight:600;text-decoration:none;border-radius:8px;transition:all 0.25s;}
+.btn-p:hover{background:var(--teal2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,107,90,0.3);}
+.btn-o{padding:13px 30px;background:transparent;color:var(--navy);font-size:13px;font-weight:600;text-decoration:none;border-radius:8px;border:1.5px solid var(--border);transition:all 0.25s;}
+.btn-o:hover{border-color:var(--teal);color:var(--teal);}
+.hero-stats{display:flex;gap:32px;margin-top:44px;padding-top:28px;border-top:1px solid var(--border);opacity:0;animation:fadeUp 0.8s ease 0.7s forwards;}
+.hstat-num{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--navy);line-height:1;}
+.hstat-num span{color:var(--teal);font-size:18px;}
+.hstat-label{font-size:11px;color:var(--muted);margin-top:3px;}
+
+/* Hero right card */
+.hero-right{position:relative;z-index:1;opacity:0;animation:slideRight 1s ease 0.5s forwards;}
+.hero-card{background:white;border-radius:20px;padding:32px;box-shadow:0 24px 64px var(--shadow);position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--gold));}
+.card-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--navy);margin-bottom:18px;}
+.agent-row{display:flex;align-items:center;gap:12px;padding:11px 13px;background:var(--warm);border-radius:10px;margin-bottom:8px;transition:all 0.2s;}
+.agent-row:hover{background:var(--teal-pale);transform:translateX(4px);}
+.agent-row:last-of-type{margin-bottom:0;}
+.a-icon{width:32px;height:32px;background:var(--teal-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.a-name{font-size:12px;font-weight:600;color:var(--navy);}
+.a-status{font-size:10px;color:var(--teal);display:flex;align-items:center;gap:4px;margin-top:1px;}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--teal2);animation:pulse 2s infinite;}
+.more-a{text-align:center;padding:11px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);margin-top:10px;}
+.float-b{position:absolute;background:white;border-radius:12px;padding:10px 14px;box-shadow:0 8px 32px var(--shadow);font-size:11px;font-weight:600;display:flex;align-items:center;gap:7px;animation:float 3s ease-in-out infinite;}
+.fb1{top:-18px;right:16px;color:var(--teal);}
+.fb2{bottom:-14px;left:-14px;color:var(--gold);animation-delay:1.5s;}
+
+/* SECTIONS */
+section{padding:100px 48px;position:relative;border-top:1px solid var(--border);}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+.eyebrow::before{content:'';display:block;width:22px;height:2px;background:var(--teal);border-radius:2px;}
+h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:14px;}
+h2 em{font-style:italic;color:var(--teal);}
+.sub{font-size:14px;color:var(--muted);max-width:500px;line-height:1.8;margin-bottom:48px;}
+
+/* PROBLEM */
+.prob-sec{background:var(--navy);}
+.prob-sec .eyebrow{color:var(--gold2);}
+.prob-sec .eyebrow::before{background:var(--gold2);}
+.prob-sec h2{color:white;}
+.prob-sec h2 em{color:var(--gold2);}
+.prob-sec .sub{color:rgba(255,255,255,0.5);}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.prob-card{padding:36px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);position:relative;overflow:hidden;transition:all 0.3s;}
+.prob-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal2),var(--gold));transform:scaleX(0);transition:transform 0.3s;}
+.prob-card:hover{background:rgba(255,255,255,0.07);}
+.prob-card:hover::after{transform:scaleX(1);}
+.prob-num{font-family:'Playfair Display',serif;font-size:60px;font-weight:700;color:rgba(255,255,255,0.05);position:absolute;top:16px;right:20px;line-height:1;}
+.prob-icon{font-size:26px;margin-bottom:14px;}
+.prob-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:white;margin-bottom:8px;}
+.prob-desc{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.8;}
+
+/* AGENTS */
+.agent-list{display:flex;flex-direction:column;}
+.ac{display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:18px;padding:20px 22px;border:1px solid var(--border);border-bottom:none;background:white;transition:all 0.25s;position:relative;}
+.ac:first-child{border-radius:12px 12px 0 0;}
+.ac:last-child{border-bottom:1px solid var(--border);border-radius:0 0 12px 12px;}
+.ac::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--teal),var(--teal2));opacity:0;border-radius:0;transition:opacity 0.25s;}
+.ac:hover{background:var(--teal-pale);transform:translateX(3px);}
+.ac:hover::before{opacity:1;}
+.ac-icon{width:44px;height:44px;background:var(--teal-pale);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:all 0.25s;}
+.ac:hover .ac-icon{background:var(--teal);}
+.ac-name{font-weight:600;font-size:13px;color:var(--navy);}
+.ac-desc{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.6;}
+.tag{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;white-space:nowrap;}
+.t1{background:rgba(26,107,90,0.1);color:var(--teal);}
+.t2{background:rgba(15,45,74,0.09);color:var(--navy);}
+.t3{background:rgba(196,146,42,0.1);color:var(--gold);}
+
+/* Extra agents toggle */
+.extra-toggle{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;background:var(--warm);border:1.5px dashed var(--border);border-radius:10px;margin-top:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--teal);transition:all 0.2s;}
+.extra-toggle:hover{background:var(--teal-pale);border-color:var(--teal);}
+.extra-icon{font-size:18px;transition:transform 0.3s;}
+.extra-toggle.open .extra-icon{transform:rotate(45deg);}
+.extra-grid{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.extra-grid.open{display:grid;}
+.ec{padding:14px 16px;background:white;border:1px solid var(--border);border-radius:10px;transition:all 0.2s;}
+.ec:hover{border-color:var(--teal);box-shadow:0 4px 16px var(--shadow);}
+.ec-icon{font-size:18px;margin-bottom:7px;}
+.ec-cat{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:3px;}
+.ec-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.ec-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+
+/* Why box */
+.why-box{background:white;border-radius:14px;padding:32px;box-shadow:0 8px 32px var(--shadow);border:1px solid var(--border);}
+.why-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:18px;}
+.why-list{display:flex;flex-direction:column;gap:12px;}
+.why-item{display:flex;gap:10px;align-items:flex-start;}
+.wcheck{width:20px;height:20px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:white;margin-top:2px;}
+.wtext{font-size:12px;color:var(--muted);line-height:1.6;}
+.wtext strong{color:var(--navy);font-weight:600;}
+
+/* STATS BAR */
+.stats-bar{background:var(--teal);padding:56px 48px;}
+.stats-inner{display:grid;grid-template-columns:repeat(3,1fr);max-width:860px;margin:0 auto;}
+.stat-i{padding:0 40px;text-align:center;border-right:1px solid rgba(255,255,255,0.15);}
+.stat-i:last-child{border-right:none;}
+.stat-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:white;line-height:1;}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.65);margin-top:8px;letter-spacing:0.03em;}
+
+/* MODULES */
+.modules-sec{background:var(--navy);}
+.modules-sec .eyebrow{color:var(--gold2);}
+.modules-sec .eyebrow::before{background:var(--gold2);}
+.modules-sec h2{color:white;}
+.modules-sec h2 em{color:var(--gold2);}
+.modules-sec .sub{color:rgba(255,255,255,0.5);margin-bottom:40px;}
+.mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.mod-card{background:rgba(255,255,255,0.05);border-radius:16px;overflow:hidden;}
+.mod-card.esg{border:1px solid rgba(196,146,42,0.3);}
+.mod-card.tender{border:1px solid rgba(42,158,127,0.35);}
+.mod-head{padding:28px 28px 20px;}
+.mod-head.esg{background:linear-gradient(135deg,rgba(196,146,42,0.12),rgba(196,146,42,0.04));}
+.mod-head.tender{background:linear-gradient(135deg,rgba(42,158,127,0.15),rgba(42,158,127,0.04));}
+.mod-head-top{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.mod-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.mod-icon.esg{background:rgba(196,146,42,0.18);}
+.mod-icon.tender{background:rgba(42,158,127,0.18);}
+.mod-badge{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:3px;}
+.mod-badge.esg{color:var(--gold2);}
+.mod-badge.tender{color:var(--teal2);}
+.mod-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:white;}
+.mod-desc{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.8;}
+.mod-body{padding:20px 28px 28px;}
+.mod-feat{display:flex;align-items:flex-start;gap:9px;margin-bottom:10px;}
+.mod-feat:last-of-type{margin-bottom:0;}
+.mcheck{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px;}
+.mcheck.esg{background:rgba(196,146,42,0.18);color:var(--gold2);}
+.mcheck.tender{background:rgba(42,158,127,0.18);color:var(--teal2);}
+.mod-feat-text{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.7;}
+.mod-feat-text strong{color:white;}
+.mod-alert{margin-top:18px;padding:12px 14px;border-radius:8px;}
+.mod-alert.esg{background:rgba(196,146,42,0.08);border:1px solid rgba(196,146,42,0.18);}
+.mod-alert.tender{background:rgba(42,158,127,0.08);border:1px solid rgba(42,158,127,0.2);}
+.mod-alert-title{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+.mod-alert-title.esg{color:var(--gold2);}
+.mod-alert-title.tender{color:var(--teal2);}
+.mod-alert-text{font-size:11px;color:rgba(255,255,255,0.5);line-height:1.7;}
+.mod-bar{margin-top:32px;padding:24px 28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.mod-bar-text{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:white;}
+.mod-bar-text em{font-style:italic;color:var(--gold2);}
+.mod-bar-btn{padding:11px 24px;background:var(--gold);color:var(--navy);font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border-radius:7px;white-space:nowrap;transition:all 0.2s;}
+.mod-bar-btn:hover{background:var(--gold2);}
+
+/* WHY NOW */
+.why-sec{background:linear-gradient(135deg,#f0faf6,#e8f4f0);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+.why-cards{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
+.why-card{padding:22px 26px;background:white;border-radius:12px;border:1px solid var(--border);}
+.why-card.green{border-left:4px solid var(--teal);}
+.why-card.gold{border-left:4px solid var(--gold);}
+.why-card.red{border-left:4px solid var(--red);}
+.wc-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:7px;}
+.wc-label.green{color:var(--teal);}
+.wc-label.gold{color:var(--gold);}
+.wc-label.red{color:var(--red);}
+.wc-text{font-size:12px;color:var(--muted);line-height:1.8;}
+.wc-text strong{color:var(--navy);}
+.val-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.val-card{background:white;border-radius:13px;padding:24px;border:1px solid var(--border);transition:all 0.3s;}
+.val-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px var(--shadow);border-color:var(--teal);}
+.vc-icon{font-size:26px;margin-bottom:12px;}
+.vc-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.vc-desc{font-size:11px;color:var(--muted);line-height:1.7;}
+.time-box{background:var(--navy);border-radius:14px;padding:28px;margin-top:14px;color:white;}
+.tb-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:18px;}
+.tb-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.07);}
+.tb-row:last-child{border-bottom:none;padding-bottom:0;}
+.tb-label{font-size:11px;color:rgba(255,255,255,0.5);}
+.tb-label.total{font-weight:700;color:white;}
+.tb-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold2);}
+.tb-val.total{font-size:32px;color:white;}
+
+/* PROCESS */
+.proc-sec{background:white;}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative;margin-top:48px;}
+.proc-steps::before{content:'';position:absolute;top:31px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal2),var(--gold));z-index:0;}
+.proc-step{text-align:center;padding:0 20px;position:relative;z-index:1;}
+.step-circle{width:62px;height:62px;border-radius:50%;background:white;border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--teal);box-shadow:0 4px 16px var(--shadow);transition:all 0.3s;}
+.proc-step:hover .step-circle{background:var(--teal);color:white;transform:scale(1.08);}
+.step-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:7px;}
+.step-desc{font-size:11px;color:var(--muted);line-height:1.7;}
+.step-time{display:inline-block;margin-top:10px;padding:3px 11px;background:var(--teal-pale);border-radius:100px;font-size:10px;font-weight:600;color:var(--teal);}
+
+/* PRICING */
+.price-sec{background:var(--warm);}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px;}
+.pc{background:white;border-radius:14px;padding:36px 32px;border:1.5px solid var(--border);position:relative;transition:all 0.3s;overflow:hidden;}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--border);transition:background 0.3s;}
+.pc:hover{transform:translateY(-5px);box-shadow:0 20px 56px var(--shadow);border-color:var(--teal);}
+.pc:hover::before{background:linear-gradient(90deg,var(--teal),var(--teal2));}
+.pc.featured{border-color:var(--teal);box-shadow:0 10px 36px rgba(26,107,90,0.12);}
+.pc.featured::before{background:linear-gradient(90deg,var(--teal),var(--gold));}
+.feat-badge{position:absolute;top:14px;right:14px;background:var(--teal);color:white;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;}
+.pc-tier{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.pc-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.pc-billing{display:inline-block;padding:2px 10px;background:rgba(26,107,90,0.08);border-radius:100px;font-size:10px;font-weight:600;color:var(--teal);margin-bottom:14px;}
+.pc-amount{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:var(--navy);line-height:1;margin:10px 0 3px;}
+.pc-amount sup{font-size:18px;vertical-align:super;}
+.pc-period{font-size:11px;color:var(--muted);}
+.pc-annual{font-size:11px;color:var(--teal);font-weight:600;margin-top:3px;}
+.pc-div{height:1px;background:var(--border);margin:18px 0;}
+.pc-features{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.pc-features li{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:var(--muted);}
+.pc-features li::before{content:'✓';flex-shrink:0;width:16px;height:16px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--teal);font-weight:700;margin-top:1px;}
+.pc-features li strong{color:var(--navy);font-weight:600;}
+.pc-cta{display:block;text-align:center;padding:12px;margin-top:24px;border-radius:7px;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;transition:all 0.25s;border:1.5px solid var(--border);color:var(--navy);}
+.pc-cta:hover{border-color:var(--teal);color:var(--teal);}
+.pc.featured .pc-cta{background:var(--teal);border-color:var(--teal);color:white;}
+.pc.featured .pc-cta:hover{background:var(--teal2);}
+
+/* CTA */
+.cta-sec{background:white;padding:120px 48px;text-align:center;position:relative;overflow:hidden;}
+.cta-glow{position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--teal-pale),transparent 70%);pointer-events:none;}
+.cta-inner{position:relative;max-width:660px;margin:0 auto;}
+.cta-inner h2{margin-bottom:14px;}
+.cta-inner p{color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:36px;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;}
+.contact-card{display:inline-flex;align-items:center;gap:36px;background:white;border-radius:14px;padding:24px 36px;box-shadow:0 8px 40px var(--shadow);border:1px solid var(--border);flex-wrap:wrap;justify-content:center;}
+.contact-person{display:flex;align-items:center;gap:12px;padding-right:32px;border-right:1px solid var(--border);}
+.avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--navy));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;}
+.cp-name{font-size:14px;font-weight:700;color:var(--navy);}
+.cp-title{font-size:11px;color:var(--muted);}
+.ci{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);transition:color 0.2s;}
+.ci:hover{color:var(--teal);}
+.ci-icon{width:38px;height:38px;border-radius:9px;background:var(--teal-pale);display:flex;align-items:center;justify-content:center;font-size:17px;}
+.ci-label{font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
+.ci-value{font-size:13px;font-weight:600;color:var(--navy);}
+.cdiv{width:1px;height:38px;background:var(--border);}
+
+/* FOOTER */
+footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.fbrand{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:white;}
+.fbrand span{color:var(--gold2);}
+.fmid,.fright{font-size:10px;color:rgba(255,255,255,0.35);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideRight{from{opacity:0;transform:translateX(36px);}to{opacity:1;transform:translateX(0);}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.rl{opacity:0;transform:translateX(-30px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1);}
+.rl.visible{opacity:1;transform:translateX(0);}
+.rr{opacity:0;transform:translateX(30px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1);}
+.rr.visible{opacity:1;transform:translateX(0);}
+.stag>*{opacity:0;transform:translateY(18px);transition:all 0.5s cubic-bezier(0.16,1,0.3,1);}
+.stag.visible>*:nth-child(1){opacity:1;transform:none;transition-delay:0s;}
+.stag.visible>*:nth-child(2){opacity:1;transform:none;transition-delay:0.1s;}
+.stag.visible>*:nth-child(3){opacity:1;transform:none;transition-delay:0.2s;}
+.stag.visible>*:nth-child(4){opacity:1;transform:none;transition-delay:0.3s;}
+.stag.visible>*:nth-child(5){opacity:1;transform:none;transition-delay:0.4s;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+
+@media(max-width:900px){
+  nav,section,.hero,.stats-bar,.cta-sec,footer{padding-left:24px;padding-right:24px;}
+  .hero,.two-col,.prob-grid,.mod-grid,.price-grid,.val-cards,.why-grid{grid-template-columns:1fr;}
+  .proc-steps{grid-template-columns:1fr 1fr;}
+  .proc-steps::before{display:none;}
+  .hero-right{display:none;}
+  .stats-inner{grid-template-columns:1fr;}
+  .stat-i{border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);padding:20px 0;}
+  .contact-card{flex-direction:column;}
+  .contact-person{border-right:none;padding-right:0;border-bottom:1px solid var(--border);padding-bottom:16px;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-brand" href="#">
+    <div class="nav-mark">I</div>
+    <span class="nav-name">Intercomp AI</span>
+  </a>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn-opt active" onclick="setLang('hu')">🇭🇺 Magyar</button>
+      <button class="lang-btn-opt" onclick="setLang('en')">🇬🇧 English</button>
+    </div>
+    <a href="https://esg-dashboard-eta.vercel.app" class="nav-esg" id="nav_esg">🌱 ESG & Pályázat</a>
+    <a href="#contact" class="nav-cta" id="nav_cta">Kapcsolat</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="border-top:none;">
+  <div class="hero-bg"></div><div class="hero-dots"></div>
+  <div class="hero-left">
+    <div class="hero-badge"><span class="badge-dot"></span><span id="hero_badge">AI Vállalatirányítás · 2025</span></div>
+    <h1 id="hero_h1">Ahol az adminisztráció <em>magától</em> fut — Ön pedig <span class="accent">növekedhet.</span></h1>
+    <p class="hero-desc" id="hero_desc">Intelligens AI ügynökök, ESG jelentés és pályázatfigyelő — egy rendszerben, amelyet Sinkó István közvetlenül kínál ki ügyfeleinek.</p>
+    <div class="hero-btns">
+      <a href="#pricing" class="btn-p" id="hero_cta1">Megnézem az ajánlatot</a>
+      <a href="#agents" class="btn-o" id="hero_cta2">Hogyan működik?</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hstat-num">68<span>%</span></div><div class="hstat-label" id="hstat1">adminisztráció automatizálható</div></div>
+      <div><div class="hstat-num">€500M<span>+</span></div><div class="hstat-label" id="hstat2">elérhető pályázati forrás évente</div></div>
+      <div><div class="hstat-num">2025</div><div class="hstat-label" id="hstat3">ESG kötelező egyre több cégnek</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="float-b fb1"><span>⚡</span><span id="float1">Aktív · 24/7</span></div>
+    <div class="hero-card">
+      <div class="card-title" id="card_title">AI Ügynök Rendszer</div>
+      <div class="agent-row"><div class="a-icon">🎯</div><div><div class="a-name" id="a1s">Lead Kvalifikáló</div><div class="a-status"><span class="sdot"></span><span id="active">Aktív</span></div></div></div>
+      <div class="agent-row"><div class="a-icon">📩</div><div><div class="a-name" id="a2s">Follow-up</div><div class="a-status"><span class="sdot"></span><span id="active2">Aktív</span></div></div></div>
+      <div class="agent-row"><div class="a-icon">📋</div><div><div class="a-name" id="a3s">Dokumentum-kezelő</div><div class="a-status"><span class="sdot"></span><span id="active3">Aktív</span></div></div></div>
+      <div class="agent-row"><div class="a-icon">⏰</div><div><div class="a-name" id="a4s">Határidő-figyelő</div><div class="a-status"><span class="sdot"></span><span id="active4">Aktív</span></div></div></div>
+      <div class="agent-row"><div class="a-icon">💬</div><div><div class="a-name" id="a5s">Ügyfélportál</div><div class="a-status"><span class="sdot"></span><span id="active5">Aktív</span></div></div></div>
+      <div class="more-a" id="more_agents">+ 10 további ügynök elérhető</div>
+    </div>
+    <div class="float-b fb2"><span>🏆</span><span id="float2">ESG · Pályázat · AI</span></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="prob-sec">
+  <div class="eyebrow" id="prob_ey">A valóság</div>
+  <h2 id="prob_h2">Amit ma <em>kézzel</em> csinál —<br>holnap automatizálható.</h2>
+  <p class="sub" id="prob_sub">A legtöbb könyvelő, adótanácsadó és cégeladási iroda ugyanazokkal a repetitív problémákkal küzd nap mint nap.</p>
+  <div class="prob-grid reveal">
+    <div class="prob-card"><div class="prob-num">01</div><div class="prob-icon">📉</div><div class="prob-title" id="p1t">Elveszett érdeklődők</div><div class="prob-desc" id="p1d">Minden lassan megválaszolt ajánlatkérés egy ügyfél, aki a versenytársnál köt ki.</div></div>
+    <div class="prob-card"><div class="prob-num">02</div><div class="prob-icon">📂</div><div class="prob-title" id="p2t">Repetitív adminisztráció</div><div class="prob-desc" id="p2d">Dokumentumok bekérése, ellenőrzése, emlékeztetők — értékes emberi kapacitás pazarlása.</div></div>
+    <div class="prob-card"><div class="prob-num">03</div><div class="prob-icon">⏳</div><div class="prob-title" id="p3t">Határidők kockázata</div><div class="prob-desc" id="p3d">Adóbevallások, éves zárlatok — ha a figyelés emberi memóriára támaszkodik, elcsúszik valami.</div></div>
+    <div class="prob-card"><div class="prob-num">04</div><div class="prob-icon">📊</div><div class="prob-title" id="p4t">Skálázás falai</div><div class="prob-desc" id="p4d">Ahogy nő az ügyfélszám, az adminisztratív teher arányosan nő.</div></div>
+  </div>
+</section>
+
+<!-- AGENTS -->
+<section id="agents">
+  <div class="eyebrow" id="ag_ey">A megoldás</div>
+  <h2 id="ag_h2">5 intelligens ügynök, <em>egy összehangolt rendszer.</em></h2>
+  <div class="two-col">
+    <div>
+      <div class="agent-list stag reveal">
+        <div class="ac"><div class="ac-icon">🎯</div><div><div class="ac-name" id="a1n">Lead Kvalifikáló Ügynök</div><div class="ac-desc" id="a1d">Automatikusan minősíti az érdeklődőket és azonnal személyre szabott választ küld — 24/7.</div></div><span class="tag t1" id="ph1">I. fázis</span></div>
+        <div class="ac"><div class="ac-icon">📩</div><div><div class="ac-name" id="a2n">Follow-up Ügynök</div><div class="ac-desc" id="a2d">Ajánlat után intelligens nyomonkövetési sorozatot indít. Nem enged el potenciális ügyfelet.</div></div><span class="tag t1" id="ph1b">I. fázis</span></div>
+        <div class="ac"><div class="ac-icon">📋</div><div><div class="ac-name" id="a3n">Dokumentum-összegyűjtő Ügynök</div><div class="ac-desc" id="a3d">Cégalapítási és könyvelési iratok bekérése, ellenőrzése — teljesen automatizáltan.</div></div><span class="tag t2" id="ph2">II. fázis</span></div>
+        <div class="ac"><div class="ac-icon">⏰</div><div><div class="ac-name" id="a4n">Határidő-figyelő Ügynök</div><div class="ac-desc" id="a4d">Adóbevallások, éves zárlatok proaktív kezelése. Minden ügyfélnél, minden határidőre.</div></div><span class="tag t2" id="ph2b">II. fázis</span></div>
+        <div class="ac"><div class="ac-icon">💬</div><div><div class="ac-name" id="a5n">Ügyfélportál Chatbot</div><div class="ac-desc" id="a5d">Ügyfelek önkiszolgálóan lekérdezhetik státuszukat és dokumentumaikat.</div></div><span class="tag t3" id="ph3">III. fázis</span></div>
+      </div>
+      <div class="extra-toggle" id="extraToggle" onclick="toggleExtra()">
+        <span id="extra_tog">⚡ + További ügynökök — kattintson a megtekintéshez</span>
+        <span class="extra-icon">+</span>
+      </div>
+      <div class="extra-grid" id="extraGrid">
+        <div class="ec"><div class="ec-icon">🔍</div><div class="ec-cat" id="ec1c">Értékesítés</div><div class="ec-name" id="ec1n">Ajánlatkérés-elemző</div><div class="ec-desc" id="ec1d">Bejövő kérések automatikus elemzése és prioritizálása.</div></div>
+        <div class="ec"><div class="ec-icon">⭐</div><div class="ec-cat" id="ec2c">Reputáció</div><div class="ec-name" id="ec2n">Értékelés-gyűjtő</div><div class="ec-desc" id="ec2d">Google / Trustpilot értékelések automatikus kezelése.</div></div>
+        <div class="ec"><div class="ec-icon">📊</div><div class="ec-cat" id="ec3c">Riport</div><div class="ec-name" id="ec3n">Havi Riport Ügynök</div><div class="ec-desc" id="ec3d">Automatikus havi összefoglaló a vezetőnek.</div></div>
+        <div class="ec"><div class="ec-icon">🌐</div><div class="ec-cat" id="ec4c">Nemzetközi</div><div class="ec-name" id="ec4n">Fordító Ügynök</div><div class="ec-desc" id="ec4d">Dokumentumok és ajánlatok 10 nyelven.</div></div>
+        <div class="ec"><div class="ec-icon">📣</div><div class="ec-cat" id="ec5c">Marketing</div><div class="ec-name" id="ec5n">Tartalom-generáló</div><div class="ec-desc" id="ec5d">LinkedIn posztok, hírlevelek automatikusan.</div></div>
+        <div class="ec"><div class="ec-icon">📈</div><div class="ec-cat" id="ec6c">Intelligencia</div><div class="ec-name" id="ec6n">Piaci Radar</div><div class="ec-desc" id="ec6d">Iparági hírek és versenytárs-figyelés.</div></div>
+      </div>
+    </div>
+    <div class="rr">
+      <div class="why-box">
+        <div class="why-title" id="why_title">Miért AI ügynök?</div>
+        <div class="why-list">
+          <div class="why-item"><div class="wcheck">✓</div><div class="wtext"><strong id="w1b">24/7 működik</strong> — <span id="w1">hétvégén és éjjel is, betegség és szabadság nélkül</span></div></div>
+          <div class="why-item"><div class="wcheck">✓</div><div class="wtext"><strong id="w2b">Skálázható</strong> — <span id="w2">100 ügyfelet ugyanolyan jól kezel mint egyet</span></div></div>
+          <div class="why-item"><div class="wcheck">✓</div><div class="wtext"><strong id="w3b">Tanul és javul</strong> — <span id="w3">minden interakcióból okosabb lesz</span></div></div>
+          <div class="why-item"><div class="wcheck">✓</div><div class="wtext"><strong id="w4b">GDPR megfelelő</strong> — <span id="w4">az adatok az Ön rendszerében maradnak</span></div></div>
+          <div class="why-item"><div class="wcheck">✓</div><div class="wtext"><strong id="w5b">Azonnali eredmény</strong> — <span id="w5">az első ügynökök 2-3 héten belül élesek</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner reveal">
+    <div class="stat-i"><div class="stat-num">3×</div><div class="stat-label" id="st1">gyorsabb ügyfélkezelés automatizálással</div></div>
+    <div class="stat-i"><div class="stat-num">68%</div><div class="stat-label" id="st2">adminisztratív feladatok automatizálható aránya</div></div>
+    <div class="stat-i"><div class="stat-num">24/7</div><div class="stat-label" id="st3">folyamatos működés — hétvégén és éjjel is</div></div>
+  </div>
+</div>
+
+<!-- MODULES -->
+<section class="modules-sec" id="modules">
+  <div class="eyebrow" id="mod_ey">Prémium modulok</div>
+  <h2 id="mod_h2">Két modul, amit <em>más nem kínál</em><br>egy csomagban.</h2>
+  <p class="sub" id="mod_sub">Az AI ügynök rendszer mellé két különleges modult is kap — amelyek önmagukban is komoly értéket képviselnek az Ön ügyfeleinek.</p>
+  <div class="mod-grid reveal">
+    <!-- ESG -->
+    <div class="mod-card esg">
+      <div class="mod-head esg">
+        <div class="mod-head-top">
+          <div class="mod-icon esg">🌱</div>
+          <div><div class="mod-badge esg" id="esg_badge">ESG Modul</div><div class="mod-title" id="esg_title">ESG Jelentés AI</div></div>
+        </div>
+        <p class="mod-desc" id="esg_desc">Automatikus ESG riportok generálása — amit az EU hamarosan kötelezővé tesz minden vállalkozásnak. Az Ön ügyfelei elsők között lesznek felkészülve.</p>
+      </div>
+      <div class="mod-body">
+        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f1"><strong>Automatikus riport generálás</strong> — cég adatai alapján percek alatt kész ESG jelentés</div></div>
+        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f2"><strong>EU Taxonomy & CSRD megfelelőség</strong> — automatikus ellenőrzés és javaslatok</div></div>
+        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f3"><strong>Digitális tanúsítvány</strong> — letölthető, megosztható ESG igazolás</div></div>
+        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f4"><strong>Éves összehasonlítás</strong> — fejlődés nyomon követése és vizualizálása</div></div>
+        <div class="mod-alert esg">
+          <div class="mod-alert-title esg" id="esg_al_t">⚠️ Miért sürgős?</div>
+          <div class="mod-alert-text" id="esg_al_d">A CSRD irányelv alapján 2025-től egyre több vállalkozásnak kötelező az ESG jelentés. Aki most felkészül, versenyelőnyt szerez.</div>
+        </div>
+      </div>
+    </div>
+    <!-- TENDER -->
+    <div class="mod-card tender">
+      <div class="mod-head tender">
+        <div class="mod-head-top">
+          <div class="mod-icon tender">🔭</div>
+          <div><div class="mod-badge tender" id="ten_badge">Pályázat Modul</div><div class="mod-title" id="ten_title">Pályázatfigyelő AI</div></div>
+        </div>
+        <p class="mod-desc" id="ten_desc">Magyar és EU-s pályázatok valós idejű figyelése — az AI automatikusan megmondja melyik pályázat illik az adott céghez, és értesíti mielőtt lejár a határidő.</p>
+      </div>
+      <div class="mod-body">
+        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f1"><strong>Magyar pályázatok</strong> — Széchenyi, GINOP, RRF, NTP és egyéb hazai alapok figyelése</div></div>
+        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f2"><strong>EU-s pályázatok</strong> — Horizon Europe, Cohesion Funds, Interreg és más uniós programok</div></div>
+        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f3"><strong>AI illesztés</strong> — automatikusan meghatározza melyik pályázat illik az adott cégprofil alapján</div></div>
+        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f4"><strong>Automatikus értesítés</strong> — email/SMS riasztás határidő előtt, soha nem marad le pályázatról</div></div>
+        <div class="mod-alert tender">
+          <div class="mod-alert-title tender" id="ten_al_t">💡 Mekkora lehetőség?</div>
+          <div class="mod-alert-text" id="ten_al_d">Évente több száz milliárd forint pályázati forrás áll rendelkezésre. A legtöbb KKV azért nem pályázik, mert nem tudja időben, hogy mire jogosult.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mod-bar reveal">
+    <div class="mod-bar-text" id="mod_bar_t">Mindkét modul <em>benne van</em> a Business és Enterprise csomagban.</div>
+    <a href="#pricing" class="mod-bar-btn" id="mod_bar_btn">Megnézem az árakat →</a>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="why-sec">
+  <div class="eyebrow" id="why_ey">Miért most?</div>
+  <h2 id="why_h2">Három ok, amiért <em>érdemes</em><br>most lépni.</h2>
+  <div class="why-grid">
+    <div class="rl">
+      <div class="why-cards">
+        <div class="why-card green"><div class="wc-label green" id="wc1l">⏱ Idő = pénz</div><div class="wc-text" id="wc1t">Egy átlagos KKV heti <strong>8-12 órát</strong> tölt adminisztrációval, amit AI-jal percekre lehet csökkenteni. Ez évi több száz munkaóra megtakarítás.</div></div>
+        <div class="why-card gold"><div class="wc-label gold" id="wc2l">🏆 Pályázati forrás</div><div class="wc-text" id="wc2t">Évente <strong>több száz milliárd forint</strong> pályázati forrás érhető el — a legtöbb cég azért nem pályázik, mert nem tudja időben, hogy mire jogosult.</div></div>
+        <div class="why-card red"><div class="wc-label red" id="wc3l">⚠️ ESG kötelező lesz</div><div class="wc-text" id="wc3t">A CSRD irányelv alapján <strong>2025-től egyre több vállalkozásnak</strong> kötelező az ESG jelentés. Aki most felkészül, elkerüli a bírságot és versenyelőnyre tesz szert.</div></div>
+      </div>
+    </div>
+    <div class="rr">
+      <div class="val-cards stag reveal">
+        <div class="val-card"><div class="vc-icon">⚡</div><div class="vc-title" id="v1t">Azonnal működik</div><div class="vc-desc" id="v1d">Nincs hosszú bevezetési projekt — az első ügynökök 2-3 héten belül élesek.</div></div>
+        <div class="val-card"><div class="vc-icon">🔒</div><div class="vc-title" id="v2t">Biztonságos</div><div class="vc-desc" id="v2d">Az adatok az Ön rendszerében maradnak — GDPR megfelelő megoldás.</div></div>
+        <div class="val-card"><div class="vc-icon">📈</div><div class="vc-title" id="v3t">Mérhető eredmény</div><div class="vc-desc" id="v3d">Minden hónapban riport — pontosan látja hány órát és forintot takarított meg.</div></div>
+        <div class="val-card"><div class="vc-icon">🤝</div><div class="vc-title" id="v4t">Személyes támogatás</div><div class="vc-desc" id="v4d">Sinkó István személyesen segít a bevezetésben és az első lépésekben.</div></div>
+      </div>
+      <div class="time-box">
+        <div class="tb-title" id="tb_title">Mennyi időt takarít meg?</div>
+        <div class="tb-row"><span class="tb-label" id="tb_r1">Ajánlatkérések kezelése</span><span class="tb-val" id="tb_v1">~4 óra/hét</span></div>
+        <div class="tb-row"><span class="tb-label" id="tb_r2">Dokumentumok bekérése</span><span class="tb-val" id="tb_v2">~3 óra/hét</span></div>
+        <div class="tb-row"><span class="tb-label" id="tb_r3">Határidők figyelése</span><span class="tb-val" id="tb_v3">~2 óra/hét</span></div>
+        <div class="tb-row"><span class="tb-label total" id="tb_total">Összesen havonta</span><span class="tb-val total" id="tb_vtotal">~36 óra</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="proc-sec">
+  <div class="eyebrow" id="proc_ey">A folyamat</div>
+  <h2 id="proc_h2">Négy lépés a <em>működő rendszerig.</em></h2>
+  <p class="sub" id="proc_sub">Gyors, strukturált megvalósítás — az első eredmények már 2-3 héten belül láthatók.</p>
+  <div class="proc-steps stag reveal">
+    <div class="proc-step"><div class="step-circle">01</div><div class="step-title" id="s1t">Discovery</div><div class="step-desc" id="s1d">Folyamatok feltérképezése, automatizálható pontok azonosítása.</div><span class="step-time" id="s1tm">~2 óra</span></div>
+    <div class="proc-step"><div class="step-circle">02</div><div class="step-title" id="s2t">MVP Fejlesztés</div><div class="step-desc" id="s2d">Az első 2 ügynök megépítése és tesztelése valós adatokkal.</div><span class="step-time" id="s2tm">2–3 hét</span></div>
+    <div class="proc-step"><div class="step-circle">03</div><div class="step-title" id="s3t">Integráció</div><div class="step-desc" id="s3d">Bekötés a meglévő eszközökhöz, onboarding, átadás.</div><span class="step-time" id="s3tm">1 hét</span></div>
+    <div class="proc-step"><div class="step-circle">04</div><div class="step-title" id="s4t">Skálázás</div><div class="step-desc" id="s4d">Bővítés és partner ügyfelek onboardolása EU-szerte.</div><span class="step-time" id="s4tm">Folyamatos</span></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="price-sec" id="pricing">
+  <div class="eyebrow" id="pr_ey">Befektetés</div>
+  <h2 id="pr_h2">Havi előfizetés, <em>mérhető megtérülés.</em></h2>
+  <p class="sub" id="pr_sub">Nincs nagy egyszeri beruházás — havi előfizetéssel elindulhat, és azonnal értékesítheti Sinkó István ügyfelei felé.</p>
+  <div class="price-grid stag reveal">
+    <div class="pc">
+      <div class="pc-tier" id="t1tier">Belépő</div>
+      <div class="pc-name">Starter</div>
+      <div class="pc-billing" id="billing">Havi előfizetés</div>
+      <div class="pc-amount"><sup>€</sup>300</div>
+      <div class="pc-period" id="t1per">/ hó · 2 ügynök</div>
+      <div class="pc-annual" id="t1ann">= €3.600 / év</div>
+      <div class="pc-div"></div>
+      <ul class="pc-features">
+        <li><strong id="f_lead">Lead Kvalifikáló Ügynök</strong></li>
+        <li><strong id="f_fup">Follow-up Ügynök</strong></li>
+        <li id="f_email">Email integráció</li>
+        <li id="f_rep">Havi riport</li>
+        <li id="f_on">Alap onboarding</li>
+      </ul>
+      <a href="#contact" class="pc-cta" id="t1cta">Kezdjük el</a>
+    </div>
+    <div class="pc featured">
+      <div class="feat-badge" id="featured">Ajánlott</div>
+      <div class="pc-tier" id="t2tier">Legtöbbet választott</div>
+      <div class="pc-name">Business</div>
+      <div class="pc-billing" id="billing2">Havi előfizetés</div>
+      <div class="pc-amount"><sup>€</sup>1.000</div>
+      <div class="pc-period" id="t2per">/ hó · 5 ügynök + modulok</div>
+      <div class="pc-annual" id="t2ann">= €12.000 / év</div>
+      <div class="pc-div"></div>
+      <ul class="pc-features">
+        <li><strong id="f_5ag">5 AI ügynök</strong> — <span id="f_5ag2">teljes stack</span></li>
+        <li><strong id="f_esg">🌱 ESG Jelentés AI</strong> <span id="f_esg2">modul</span></li>
+        <li><strong id="f_ten">🔭 Pályázatfigyelő AI</strong> <span id="f_ten2">modul</span></li>
+        <li id="f_crm">CRM integráció</li>
+        <li id="f_sup">Prioritás support</li>
+      </ul>
+      <a href="#contact" class="pc-cta" id="t2cta">Ezt kérem</a>
+    </div>
+    <div class="pc">
+      <div class="pc-tier" id="t3tier">Teljes rendszer</div>
+      <div class="pc-name">Enterprise</div>
+      <div class="pc-billing" id="billing3">Havi előfizetés</div>
+      <div class="pc-amount"><sup>€</sup>3.000</div>
+      <div class="pc-period" id="t3per">/ hó · korlátlan</div>
+      <div class="pc-annual" id="t3ann">Minden modul + dedikált support</div>
+      <div class="pc-div"></div>
+      <ul class="pc-features">
+        <li><strong id="f_unl">Korlátlan AI ügynök</strong></li>
+        <li><strong id="f_por">Ügyfélportál</strong> <span id="f_por2">chatbottal</span></li>
+        <li><strong id="f_esg3">🌱 ESG AI</strong> + <span id="f_esg4">tanúsítvány kiállítás</span></li>
+        <li><strong id="f_ten3">🔭 Pályázatfigyelő</strong> + <span id="f_ten4">AI illesztés</span></li>
+        <li id="f_dev">Dedikált fejlesztői support</li>
+      </ul>
+      <a href="#contact" class="pc-cta" id="t3cta">Kapcsolatfelvétel</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-sec" id="contact">
+  <div class="cta-glow"></div>
+  <div class="cta-inner reveal">
+    <div class="eyebrow" style="justify-content:center;" id="cta_ey">Következő lépés</div>
+    <h2 id="cta_h2">Kezdjük el <em>együtt.</em></h2>
+    <p id="cta_p">Lépjen kapcsolatba Sinkó Istvánnal — egy rövid egyeztetés után pontosan látni fogja, mit hozhat az AI rendszer az Ön vállalkozásának.</p>
+    <div class="cta-btns">
+      <a href="tel:+36306943931" class="btn-p">📞 +36 30 694 3931</a>
+      <a href="mailto:intercomp2013@gmail.com" class="btn-o">✉ intercomp2013@gmail.com</a>
+    </div>
+    <div class="contact-card">
+      <div class="contact-person">
+        <div class="avatar">SI</div>
+        <div><div class="cp-name">Sinkó István</div><div class="cp-title" id="cp_title">Intercomp — Ügyvezető</div></div>
+      </div>
+      <a href="tel:+36306943931" class="ci"><div class="ci-icon">📞</div><div><div class="ci-label" id="ci_tel">Telefon</div><div class="ci-value">+36 30 694 3931</div></div></a>
+      <div class="cdiv"></div>
+      <a href="mailto:intercomp2013@gmail.com" class="ci"><div class="ci-icon">✉️</div><div><div class="ci-label" id="ci_email">Email</div><div class="ci-value">intercomp2013@gmail.com</div></div></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fbrand">Intercomp <span>AI</span></div>
+  <div class="fmid" id="f_mid">AI Vállalatirányítás · 2025</div>
+  <div class="fright" id="f_right">Sinkó István · +36 30 694 3931</div>
+</footer>
+
+<script>
+// ── TRANSLATIONS ──
+const T = {
+  hu:{
+    nav_esg:"🌱 ESG & Pályázat", nav_cta:"Kapcsolat",
+    hero_badge:"AI Vállalatirányítás · 2025",
+    hero_h1:"Ahol az adminisztráció <em>magától</em> fut — Ön pedig <span class='accent'>növekedhet.</span>",
+    hero_desc:"Intelligens AI ügynökök, ESG jelentés és pályázatfigyelő — egy rendszerben, amelyet Sinkó István közvetlenül kínál ki ügyfeleinek.",
+    hero_cta1:"Megnézem az ajánlatot", hero_cta2:"Hogyan működik?",
+    hstat1:"adminisztráció automatizálható", hstat2:"elérhető pályázati forrás évente", hstat3:"ESG kötelező egyre több cégnek",
+    float1:"Aktív · 24/7", float2:"ESG · Pályázat · AI",
+    card_title:"AI Ügynök Rendszer",
+    a1s:"Lead Kvalifikáló", a2s:"Follow-up", a3s:"Dokumentum-kezelő", a4s:"Határidő-figyelő", a5s:"Ügyfélportál",
+    active:"Aktív", active2:"Aktív", active3:"Aktív", active4:"Aktív", active5:"Aktív",
+    more_agents:"+ 10 további ügynök elérhető",
+    prob_ey:"A valóság",
+    prob_h2:"Amit ma <em>kézzel</em> csinál —<br>holnap automatizálható.",
+    prob_sub:"A legtöbb könyvelő, adótanácsadó és cégeladási iroda ugyanazokkal a repetitív problémákkal küzd nap mint nap.",
+    p1t:"Elveszett érdeklődők", p1d:"Minden lassan megválaszolt ajánlatkérés egy ügyfél, aki a versenytársnál köt ki.",
+    p2t:"Repetitív adminisztráció", p2d:"Dokumentumok bekérése, ellenőrzése, emlékeztetők — értékes emberi kapacitás pazarlása.",
+    p3t:"Határidők kockázata", p3d:"Adóbevallások, éves zárlatok — ha a figyelés emberi memóriára támaszkodik, elcsúszik valami.",
+    p4t:"Skálázás falai", p4d:"Ahogy nő az ügyfélszám, az adminisztratív teher arányosan nő.",
+    ag_ey:"A megoldás",
+    ag_h2:"5 intelligens ügynök, <em>egy összehangolt rendszer.</em>",
+    a1n:"Lead Kvalifikáló Ügynök", a1d:"Automatikusan minősíti az érdeklődőket és azonnal személyre szabott választ küld — 24/7.",
+    a2n:"Follow-up Ügynök", a2d:"Ajánlat után intelligens nyomonkövetési sorozatot indít. Nem enged el potenciális ügyfelet.",
+    a3n:"Dokumentum-összegyűjtő Ügynök", a3d:"Cégalapítási és könyvelési iratok bekérése, ellenőrzése — teljesen automatizáltan.",
+    a4n:"Határidő-figyelő Ügynök", a4d:"Adóbevallások, éves zárlatok proaktív kezelése. Minden ügyfélnél, minden határidőre.",
+    a5n:"Ügyfélportál Chatbot", a5d:"Ügyfelek önkiszolgálóan lekérdezhetik státuszukat és dokumentumaikat.",
+    ph1:"I. fázis", ph1b:"I. fázis", ph2:"II. fázis", ph2b:"II. fázis", ph3:"III. fázis",
+    extra_tog:"⚡ + További ügynökök — kattintson a megtekintéshez",
+    ec1c:"Értékesítés", ec1n:"Ajánlatkérés-elemző", ec1d:"Bejövő kérések automatikus elemzése és prioritizálása.",
+    ec2c:"Reputáció", ec2n:"Értékelés-gyűjtő", ec2d:"Google / Trustpilot értékelések automatikus kezelése.",
+    ec3c:"Riport", ec3n:"Havi Riport Ügynök", ec3d:"Automatikus havi összefoglaló a vezetőnek.",
+    ec4c:"Nemzetközi", ec4n:"Fordító Ügynök", ec4d:"Dokumentumok és ajánlatok 10 nyelven.",
+    ec5c:"Marketing", ec5n:"Tartalom-generáló", ec5d:"LinkedIn posztok, hírlevelek automatikusan.",
+    ec6c:"Intelligencia", ec6n:"Piaci Radar", ec6d:"Iparági hírek és versenytárs-figyelés.",
+    why_title:"Miért AI ügynök?",
+    w1b:"24/7 működik", w1:"hétvégén és éjjel is, betegség és szabadság nélkül",
+    w2b:"Skálázható", w2:"100 ügyfelet ugyanolyan jól kezel mint egyet",
+    w3b:"Tanul és javul", w3:"minden interakcióból okosabb lesz",
+    w4b:"GDPR megfelelő", w4:"az adatok az Ön rendszerében maradnak",
+    w5b:"Azonnali eredmény", w5:"az első ügynökök 2-3 héten belül élesek",
+    st1:"gyorsabb ügyfélkezelés automatizálással",
+    st2:"adminisztratív feladatok automatizálható aránya",
+    st3:"folyamatos működés — hétvégén és éjjel is",
+    mod_ey:"Prémium modulok",
+    mod_h2:"Két modul, amit <em>más nem kínál</em><br>egy csomagban.",
+    mod_sub:"Az AI ügynök rendszer mellé két különleges modult is kap — amelyek önmagukban is komoly értéket képviselnek az Ön ügyfeleinek.",
+    esg_badge:"ESG Modul", esg_title:"ESG Jelentés AI",
+    esg_desc:"Automatikus ESG riportok generálása — amit az EU hamarosan kötelezővé tesz minden vállalkozásnak. Az Ön ügyfelei elsők között lesznek felkészülve.",
+    esg_f1:"<strong>Automatikus riport generálás</strong> — cég adatai alapján percek alatt kész ESG jelentés",
+    esg_f2:"<strong>EU Taxonomy & CSRD megfelelőség</strong> — automatikus ellenőrzés és javaslatok",
+    esg_f3:"<strong>Digitális tanúsítvány</strong> — letölthető, megosztható ESG igazolás",
+    esg_f4:"<strong>Éves összehasonlítás</strong> — fejlődés nyomon követése és vizualizálása",
+    esg_al_t:"⚠️ Miért sürgős?",
+    esg_al_d:"A CSRD irányelv alapján 2025-től egyre több vállalkozásnak kötelező az ESG jelentés. Aki most felkészül, versenyelőnyt szerez.",
+    ten_badge:"Pályázat Modul", ten_title:"Pályázatfigyelő AI",
+    ten_desc:"Magyar és EU-s pályázatok valós idejű figyelése — az AI automatikusan megmondja melyik pályázat illik az adott céghez.",
+    ten_f1:"<strong>Magyar pályázatok</strong> — Széchenyi, GINOP, RRF, NTP és egyéb hazai alapok figyelése",
+    ten_f2:"<strong>EU-s pályázatok</strong> — Horizon Europe, Cohesion Funds, Interreg és más uniós programok",
+    ten_f3:"<strong>AI illesztés</strong> — automatikusan meghatározza melyik pályázat illik az adott cégprofil alapján",
+    ten_f4:"<strong>Automatikus értesítés</strong> — email/SMS riasztás határidő előtt, soha nem marad le pályázatról",
+    ten_al_t:"💡 Mekkora lehetőség?",
+    ten_al_d:"Évente több száz milliárd forint pályázati forrás áll rendelkezésre. A legtöbb KKV azért nem pályázik, mert nem tudja időben, hogy mire jogosult.",
+    mod_bar_t:"Mindkét modul <em>benne van</em> a Business és Enterprise csomagban.",
+    mod_bar_btn:"Megnézem az árakat →",
+    why_ey:"Miért most?",
+    why_h2:"Három ok, amiért <em>érdemes</em><br>most lépni.",
+    wc1l:"⏱ Idő = pénz", wc1t:"Egy átlagos KKV heti <strong>8-12 órát</strong> tölt adminisztrációval, amit AI-jal percekre lehet csökkenteni. Ez évi több száz munkaóra megtakarítás.",
+    wc2l:"🏆 Pályázati forrás", wc2t:"Évente <strong>több száz milliárd forint</strong> pályázati forrás érhető el — a legtöbb cég azért nem pályázik, mert nem tudja időben, hogy mire jogosult.",
+    wc3l:"⚠️ ESG kötelező lesz", wc3t:"A CSRD irányelv alapján <strong>2025-től egyre több vállalkozásnak</strong> kötelező az ESG jelentés. Aki most felkészül, elkerüli a bírságot és versenyelőnyre tesz szert.",
+    v1t:"Azonnal működik", v1d:"Nincs hosszú bevezetési projekt — az első ügynökök 2-3 héten belül élesek.",
+    v2t:"Biztonságos", v2d:"Az adatok az Ön rendszerében maradnak — GDPR megfelelő megoldás.",
+    v3t:"Mérhető eredmény", v3d:"Minden hónapban riport — pontosan látja hány órát és forintot takarított meg.",
+    v4t:"Személyes támogatás", v4d:"Sinkó István személyesen segít a bevezetésben és az első lépésekben.",
+    tb_title:"Mennyi időt takarít meg?",
+    tb_r1:"Ajánlatkérések kezelése", tb_v1:"~4 óra/hét",
+    tb_r2:"Dokumentumok bekérése", tb_v2:"~3 óra/hét",
+    tb_r3:"Határidők figyelése", tb_v3:"~2 óra/hét",
+    tb_total:"Összesen havonta", tb_vtotal:"~36 óra",
+    proc_ey:"A folyamat",
+    proc_h2:"Négy lépés a <em>működő rendszerig.</em>",
+    proc_sub:"Gyors, strukturált megvalósítás — az első eredmények már 2-3 héten belül láthatók.",
+    s1t:"Discovery", s1d:"Folyamatok feltérképezése, automatizálható pontok azonosítása.", s1tm:"~2 óra",
+    s2t:"MVP Fejlesztés", s2d:"Az első 2 ügynök megépítése és tesztelése valós adatokkal.", s2tm:"2–3 hét",
+    s3t:"Integráció", s3d:"Bekötés a meglévő eszközökhöz, onboarding, átadás.", s3tm:"1 hét",
+    s4t:"Skálázás", s4d:"Bővítés és partner ügyfelek onboardolása EU-szerte.", s4tm:"Folyamatos",
+    pr_ey:"Befektetés",
+    pr_h2:"Havi előfizetés, <em>mérhető megtérülés.</em>",
+    pr_sub:"Nincs nagy egyszeri beruházás — havi előfizetéssel elindulhat, és azonnal értékesítheti Sinkó István ügyfelei felé.",
+    t1tier:"Belépő", t1per:"/ hó · 2 ügynök", t1ann:"= €3.600 / év", t1cta:"Kezdjük el",
+    t2tier:"Legtöbbet választott", t2per:"/ hó · 5 ügynök + modulok", t2ann:"= €12.000 / év", t2cta:"Ezt kérem",
+    t3tier:"Teljes rendszer", t3per:"/ hó · korlátlan", t3ann:"Minden modul + dedikált support", t3cta:"Kapcsolatfelvétel",
+    billing:"Havi előfizetés", billing2:"Havi előfizetés", billing3:"Havi előfizetés", featured:"Ajánlott",
+    f_lead:"Lead Kvalifikáló Ügynök", f_fup:"Follow-up Ügynök", f_email:"Email integráció", f_rep:"Havi riport", f_on:"Alap onboarding",
+    f_5ag:"5 AI ügynök", f_5ag2:"teljes stack",
+    f_esg:"🌱 ESG Jelentés AI", f_esg2:"modul",
+    f_ten:"🔭 Pályázatfigyelő AI", f_ten2:"modul",
+    f_crm:"CRM integráció", f_sup:"Prioritás support",
+    f_unl:"Korlátlan AI ügynök",
+    f_por:"Ügyfélportál", f_por2:"chatbottal",
+    f_esg3:"🌱 ESG AI", f_esg4:"tanúsítvány kiállítás",
+    f_ten3:"🔭 Pályázatfigyelő", f_ten4:"AI illesztés",
+    f_dev:"Dedikált fejlesztői support",
+    cta_ey:"Következő lépés",
+    cta_h2:"Kezdjük el <em>együtt.</em>",
+    cta_p:"Lépjen kapcsolatba Sinkó Istvánnal — egy rövid egyeztetés után pontosan látni fogja, mit hozhat az AI rendszer az Ön vállalkozásának.",
+    cp_title:"Intercomp — Ügyvezető", ci_tel:"Telefon", ci_email:"Email",
+    f_mid:"AI Vállalatirányítás · 2025", f_right:"Sinkó István · +36 30 694 3931"
+  },
+  en:{
+    nav_esg:"🌱 ESG & Grants", nav_cta:"Contact",
+    hero_badge:"AI Business Management · 2025",
+    hero_h1:"Where administration <em>runs itself</em> — and you can <span class='accent'>grow.</span>",
+    hero_desc:"Intelligent AI agents, ESG reporting and grant monitoring — in one system, offered directly to clients by István Sinkó.",
+    hero_cta1:"View the proposal", hero_cta2:"How does it work?",
+    hstat1:"of administration automatable", hstat2:"available grant funding annually", hstat3:"ESG mandatory for more companies",
+    float1:"Active · 24/7", float2:"ESG · Grants · AI",
+    card_title:"AI Agent System",
+    a1s:"Lead Qualifier", a2s:"Follow-up", a3s:"Document Handler", a4s:"Deadline Monitor", a5s:"Client Portal",
+    active:"Active", active2:"Active", active3:"Active", active4:"Active", active5:"Active",
+    more_agents:"+ 10 more agents available",
+    prob_ey:"The reality",
+    prob_h2:"What you do <em>manually</em> today —<br>can be automated tomorrow.",
+    prob_sub:"Most accountants, tax advisors and company sales offices face the same repetitive problems every day.",
+    p1t:"Lost leads", p1d:"Every slowly answered enquiry is a client who ends up with a competitor.",
+    p2t:"Repetitive administration", p2d:"Document requests, checks, reminders — valuable human capacity wasted.",
+    p3t:"Deadline risk", p3d:"Tax filings, annual closings — if tracking relies on human memory, something will slip.",
+    p4t:"Scaling walls", p4d:"As client numbers grow, administrative burden grows proportionally.",
+    ag_ey:"The solution",
+    ag_h2:"5 intelligent agents, <em>one coordinated system.</em>",
+    a1n:"Lead Qualification Agent", a1d:"Automatically qualifies enquiries and sends personalised responses instantly — 24/7.",
+    a2n:"Follow-up Agent", a2d:"After sending a proposal, launches an intelligent timed follow-up sequence.",
+    a3n:"Document Collection Agent", a3d:"Requests and verifies documents for company formation and accounting — fully automated.",
+    a4n:"Deadline Monitoring Agent", a4d:"Proactive management of tax filings and annual closings. Every client, every deadline.",
+    a5n:"Client Portal Chatbot", a5d:"Clients self-serve to check their status and documents.",
+    ph1:"Phase I", ph1b:"Phase I", ph2:"Phase II", ph2b:"Phase II", ph3:"Phase III",
+    extra_tog:"⚡ + More agents — click to view",
+    ec1c:"Sales", ec1n:"Enquiry Analyser", ec1d:"Automatic analysis and prioritisation of incoming enquiries.",
+    ec2c:"Reputation", ec2n:"Review Collector", ec2d:"Automated management of Google / Trustpilot reviews.",
+    ec3c:"Reporting", ec3n:"Monthly Report Agent", ec3d:"Automatic monthly summary for management.",
+    ec4c:"International", ec4n:"Translation Agent", ec4d:"Documents and proposals in 10 languages.",
+    ec5c:"Marketing", ec5n:"Content Generator", ec5d:"LinkedIn posts, newsletters automatically.",
+    ec6c:"Intelligence", ec6n:"Market Radar", ec6d:"Industry news and competitor monitoring.",
+    why_title:"Why AI agents?",
+    w1b:"24/7 operation", w1:"nights and weekends too, no sick leave or holidays",
+    w2b:"Scalable", w2:"handles 100 clients as well as one",
+    w3b:"Learns and improves", w3:"gets smarter with every interaction",
+    w4b:"GDPR compliant", w4:"data stays in your system",
+    w5b:"Immediate results", w5:"first agents live within 2-3 weeks",
+    st1:"faster client management with automation",
+    st2:"of administrative tasks are automatable",
+    st3:"continuous operation — nights and weekends",
+    mod_ey:"Premium modules",
+    mod_h2:"Two modules <em>nobody else offers</em><br>in one package.",
+    mod_sub:"Alongside the AI agent system, you get two special modules — which deliver serious value to your clients on their own.",
+    esg_badge:"ESG Module", esg_title:"ESG Report AI",
+    esg_desc:"Automatic ESG report generation — which the EU will soon make mandatory for all businesses. Your clients will be among the first to be prepared.",
+    esg_f1:"<strong>Automatic report generation</strong> — ESG report ready in minutes based on company data",
+    esg_f2:"<strong>EU Taxonomy & CSRD compliance</strong> — automatic checks and recommendations",
+    esg_f3:"<strong>Digital certificate</strong> — downloadable, shareable ESG credential",
+    esg_f4:"<strong>Annual comparison</strong> — track and visualise progress over time",
+    esg_al_t:"⚠️ Why urgent?",
+    esg_al_d:"Under the CSRD directive, ESG reporting will become mandatory for more and more companies from 2025. Those who prepare now gain a competitive edge.",
+    ten_badge:"Grant Module", ten_title:"Grant Monitor AI",
+    ten_desc:"Real-time monitoring of Hungarian and EU grants — the AI automatically identifies which grants match each company and notifies before deadlines.",
+    ten_f1:"<strong>Hungarian grants</strong> — Széchenyi, GINOP, RRF, NTP and other domestic funds",
+    ten_f2:"<strong>EU grants</strong> — Horizon Europe, Cohesion Funds, Interreg and other EU programmes",
+    ten_f3:"<strong>AI matching</strong> — automatically determines which grant fits the company profile",
+    ten_f4:"<strong>Automatic alerts</strong> — email/SMS notification before deadlines, never miss a grant",
+    ten_al_t:"💡 How big is the opportunity?",
+    ten_al_d:"Hundreds of billions in grant funding are available annually. Most SMEs don't apply because they don't know in time what they're eligible for.",
+    mod_bar_t:"Both modules are <em>included</em> in the Business and Enterprise plans.",
+    mod_bar_btn:"View pricing →",
+    why_ey:"Why now?",
+    why_h2:"Three reasons to <em>act</em><br>now.",
+    wc1l:"⏱ Time = money", wc1t:"An average SME spends <strong>8-12 hours per week</strong> on administration — which AI can reduce to minutes. That's hundreds of work hours saved per year.",
+    wc2l:"🏆 Grant funding", wc2t:"<strong>Hundreds of billions</strong> in grant funding are available annually — most companies don't apply because they don't know in time what they're eligible for.",
+    wc3l:"⚠️ ESG will be mandatory", wc3t:"Under CSRD, <strong>ESG reporting is becoming mandatory for more companies from 2025.</strong> Those who prepare now avoid penalties and gain a competitive edge.",
+    v1t:"Works immediately", v1d:"No long implementation — first agents live within 2-3 weeks.",
+    v2t:"Secure", v2d:"Data stays in your system — GDPR compliant solution.",
+    v3t:"Measurable results", v3d:"Monthly report — see exactly how many hours and money you've saved.",
+    v4t:"Personal support", v4d:"István Sinkó personally helps with onboarding and first steps.",
+    tb_title:"How much time will you save?",
+    tb_r1:"Handling enquiries", tb_v1:"~4 hrs/wk",
+    tb_r2:"Requesting documents", tb_v2:"~3 hrs/wk",
+    tb_r3:"Monitoring deadlines", tb_v3:"~2 hrs/wk",
+    tb_total:"Total per month", tb_vtotal:"~36 hrs",
+    proc_ey:"The process",
+    proc_h2:"Four steps to a <em>working system.</em>",
+    proc_sub:"Fast, structured implementation — first results visible within 2-3 weeks.",
+    s1t:"Discovery", s1d:"Map existing processes and identify automation points.", s1tm:"~2 hours",
+    s2t:"MVP Development", s2d:"Build and test the first 2 agents with real data.", s2tm:"2–3 weeks",
+    s3t:"Integration", s3d:"Connect to existing tools, onboarding and handover.", s3tm:"1 week",
+    s4t:"Scaling", s4d:"Expansion and partner client onboarding across the EU.", s4tm:"Ongoing",
+    pr_ey:"Investment",
+    pr_h2:"Monthly subscription, <em>measurable returns.</em>",
+    pr_sub:"No large upfront cost — start with a monthly subscription and offer to István Sinkó's clients immediately.",
+    t1tier:"Entry", t1per:"/ mo · 2 agents", t1ann:"= €3,600 / year", t1cta:"Get started",
+    t2tier:"Most popular", t2per:"/ mo · 5 agents + modules", t2ann:"= €12,000 / year", t2cta:"I want this",
+    t3tier:"Full system", t3per:"/ mo · unlimited", t3ann:"All modules + dedicated support", t3cta:"Get in touch",
+    billing:"Monthly subscription", billing2:"Monthly subscription", billing3:"Monthly subscription", featured:"Recommended",
+    f_lead:"Lead Qualification Agent", f_fup:"Follow-up Agent", f_email:"Email integration", f_rep:"Monthly report", f_on:"Basic onboarding",
+    f_5ag:"5 AI agents", f_5ag2:"full stack",
+    f_esg:"🌱 ESG Report AI", f_esg2:"module",
+    f_ten:"🔭 Grant Monitor AI", f_ten2:"module",
+    f_crm:"CRM integration", f_sup:"Priority support",
+    f_unl:"Unlimited AI agents",
+    f_por:"Client portal", f_por2:"with chatbot",
+    f_esg3:"🌱 ESG AI", f_esg4:"certificate issuance",
+    f_ten3:"🔭 Grant Monitor", f_ten4:"AI matching",
+    f_dev:"Dedicated developer support",
+    cta_ey:"Next step",
+    cta_h2:"Let's start <em>together.</em>",
+    cta_p:"Contact István Sinkó — after a short discussion you'll know exactly what the AI system can bring to your business.",
+    cp_title:"Intercomp — Managing Director", ci_tel:"Phone", ci_email:"Email",
+    f_mid:"AI Business Management · 2025", f_right:"István Sinkó · +36 30 694 3931"
+  }
+};
+
+// ── LANG SWITCH ──
+let lang = 'hu';
+
+function setLang(l) {
+  lang = l;
+  const t = T[l];
+  // Update every element by id
+  Object.keys(t).forEach(key => {
+    const el = document.getElementById(key);
+    if (el) el.innerHTML = t[key];
+  });
+  // Update nav buttons
+  document.querySelectorAll('.lang-btn-opt').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === `setLang('${l}')`);
+  });
+  document.documentElement.lang = l;
+}
+
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Extra agents toggle
+function toggleExtra() {
+  document.getElementById('extraToggle').classList.toggle('open');
+  document.getElementById('extraGrid').classList.toggle('open');
+}
+
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal,.rl,.rr,.stag').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
