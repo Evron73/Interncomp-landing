@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interncomp AI</title>
+<title>Interncomp AI — Vállalatirányítási Rendszer</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -21,27 +21,66 @@ body{background:var(--cream);color:var(--ink);font-family:'Plus Jakarta Sans',sa
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-thumb{background:var(--teal2);border-radius:2px;}
 
+/* ── FUTÓ LED SÁV ── */
+.led-bar{
+  background:var(--navy);
+  overflow:hidden;
+  padding:14px 0;
+  height:56px;
+  display:flex;
+  align-items:center;
+  position:relative;
+  border-bottom:2px solid var(--teal);
+}
+.led-bar::before,.led-bar::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;
+}
+.led-bar::before{left:0;background:linear-gradient(90deg,var(--navy),transparent);}
+.led-bar::after{right:0;background:linear-gradient(-90deg,var(--navy),transparent);}
+.led-track{
+  display:flex;
+  width:max-content;
+  animation:ledScroll 25s linear infinite;
+  gap:0;
+}
+.led-item{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:0 32px;
+  font-size:12px;font-weight:600;
+  color:var(--gold2);
+  letter-spacing:0.08em;
+  white-space:nowrap;
+}
+.led-item .led-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--teal2);
+  box-shadow:0 0 6px var(--teal2);
+  animation:ledPulse 1.2s ease-in-out infinite;
+  flex-shrink:0;
+}
+.led-item span{color:rgba(255,255,255,0.85);}
+.led-sep{color:var(--teal2);font-size:18px;padding:0 8px;opacity:0.5;}
+@keyframes ledScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+@keyframes ledPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
+
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.94);backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:all 0.3s;}
-nav.scrolled{border-bottom-color:var(--border);box-shadow:0 2px 24px var(--shadow);}
+nav{position:fixed;top:56px;left:0;right:0;z-index:100;height:68px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all 0.3s;box-shadow:0 2px 16px var(--shadow);}
+nav.scrolled{box-shadow:0 4px 28px var(--shadow);}
 .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .nav-mark{width:36px;height:36px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;}
 .nav-name{font-weight:600;font-size:13px;letter-spacing:0.05em;text-transform:uppercase;color:var(--navy);}
 .nav-right{display:flex;align-items:center;gap:16px;}
-
-/* Lang toggle — only HU/EN */
 .lang-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
 .lang-btn-opt{padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;background:white;color:var(--muted);border:none;display:flex;align-items:center;gap:6px;}
 .lang-btn-opt.active{background:var(--teal);color:white;}
 .lang-btn-opt:hover:not(.active){background:var(--teal-pale);color:var(--teal);}
-
 .nav-cta{padding:9px 22px;background:var(--teal);color:white;font-size:12px;font-weight:600;letter-spacing:0.05em;text-decoration:none;border-radius:6px;transition:all 0.2s;text-transform:uppercase;}
 .nav-cta:hover{background:var(--teal2);transform:translateY(-1px);}
 .nav-esg{padding:9px 16px;border:1.5px solid var(--teal);color:var(--teal);font-size:12px;font-weight:600;text-decoration:none;border-radius:6px;transition:all 0.2s;}
 .nav-esg:hover{background:var(--teal-pale);}
 
 /* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;padding:110px 48px 60px;position:relative;overflow:hidden;}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;padding:175px 48px 60px;position:relative;overflow:hidden;}
 .hero-bg{position:absolute;top:-10%;right:-5%;width:55%;height:110%;background:linear-gradient(145deg,var(--teal),var(--navy));border-radius:40% 0 0 35%;opacity:0.07;z-index:0;}
 .hero-dots{position:absolute;top:15%;left:5%;width:180px;height:180px;background-image:radial-gradient(var(--sand) 1.5px,transparent 1.5px);background-size:18px 18px;opacity:0.6;z-index:0;}
 .hero-left{position:relative;z-index:1;}
@@ -86,6 +125,15 @@ h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);font-we
 h2 em{font-style:italic;color:var(--teal);}
 .sub{font-size:14px;color:var(--muted);max-width:500px;line-height:1.8;margin-bottom:48px;}
 
+/* COUNTERS BAR */
+.counters-bar{background:var(--navy);padding:72px 48px;}
+.counters-inner{display:grid;grid-template-columns:repeat(4,1fr);max-width:1000px;margin:0 auto;gap:0;}
+.counter-item{padding:0 32px;text-align:center;border-right:1px solid rgba(255,255,255,0.1);}
+.counter-item:last-child{border-right:none;}
+.counter-num{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:white;line-height:1;display:block;}
+.counter-num .counter-suffix{font-size:28px;color:var(--gold2);}
+.counter-label{font-size:11px;color:rgba(255,255,255,0.5);margin-top:10px;letter-spacing:0.05em;line-height:1.5;}
+
 /* PROBLEM */
 .prob-sec{background:var(--navy);}
 .prob-sec .eyebrow{color:var(--gold2);}
@@ -108,7 +156,7 @@ h2 em{font-style:italic;color:var(--teal);}
 .ac{display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:18px;padding:20px 22px;border:1px solid var(--border);border-bottom:none;background:white;transition:all 0.25s;position:relative;}
 .ac:first-child{border-radius:12px 12px 0 0;}
 .ac:last-child{border-bottom:1px solid var(--border);border-radius:0 0 12px 12px;}
-.ac::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--teal),var(--teal2));opacity:0;border-radius:0;transition:opacity 0.25s;}
+.ac::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--teal),var(--teal2));opacity:0;transition:opacity 0.25s;}
 .ac:hover{background:var(--teal-pale);transform:translateX(3px);}
 .ac:hover::before{opacity:1;}
 .ac-icon{width:44px;height:44px;background:var(--teal-pale);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:all 0.25s;}
@@ -119,8 +167,6 @@ h2 em{font-style:italic;color:var(--teal);}
 .t1{background:rgba(26,107,90,0.1);color:var(--teal);}
 .t2{background:rgba(15,45,74,0.09);color:var(--navy);}
 .t3{background:rgba(196,146,42,0.1);color:var(--gold);}
-
-/* Extra agents toggle */
 .extra-toggle{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;background:var(--warm);border:1.5px dashed var(--border);border-radius:10px;margin-top:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--teal);transition:all 0.2s;}
 .extra-toggle:hover{background:var(--teal-pale);border-color:var(--teal);}
 .extra-icon{font-size:18px;transition:transform 0.3s;}
@@ -133,8 +179,6 @@ h2 em{font-style:italic;color:var(--teal);}
 .ec-cat{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:3px;}
 .ec-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px;}
 .ec-desc{font-size:11px;color:var(--muted);line-height:1.6;}
-
-/* Why box */
 .why-box{background:white;border-radius:14px;padding:32px;box-shadow:0 8px 32px var(--shadow);border:1px solid var(--border);}
 .why-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:18px;}
 .why-list{display:flex;flex-direction:column;gap:12px;}
@@ -142,6 +186,36 @@ h2 em{font-style:italic;color:var(--teal);}
 .wcheck{width:20px;height:20px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:white;margin-top:2px;}
 .wtext{font-size:12px;color:var(--muted);line-height:1.6;}
 .wtext strong{color:var(--navy);font-weight:600;}
+
+/* ── 3 MODULOK AI ABLAK ── */
+.ai-windows-sec{background:var(--navy);}
+.ai-windows-sec .eyebrow{color:var(--gold2);}
+.ai-windows-sec .eyebrow::before{background:var(--gold2);}
+.ai-windows-sec h2{color:white;}
+.ai-windows-sec h2 em{color:var(--gold2);}
+.ai-windows-sec .sub{color:rgba(255,255,255,0.5);}
+.ai-windows-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.ai-window{background:rgba(10,10,20,0.8);border:1px solid rgba(42,158,127,0.3);border-radius:16px;overflow:hidden;transition:all 0.4s;}
+.ai-window:hover{transform:translateY(-6px);border-color:var(--teal2);box-shadow:0 24px 64px rgba(42,158,127,0.15);}
+.ai-window-titlebar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.06);}
+.win-dots{display:flex;gap:6px;}
+.win-dot{width:10px;height:10px;border-radius:50%;}
+.win-dot.red{background:#ff5f56;}
+.win-dot.yellow{background:#ffbd2e;}
+.win-dot.green{background:#27c93f;}
+.win-title-text{font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:0.05em;flex:1;text-align:center;}
+.ai-window-body{padding:24px;}
+.ai-win-icon{font-size:36px;margin-bottom:14px;}
+.ai-win-badge{display:inline-block;padding:3px 10px;background:rgba(42,158,127,0.15);border:1px solid rgba(42,158,127,0.3);border-radius:100px;font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal2);margin-bottom:12px;}
+.ai-win-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;margin-bottom:10px;}
+.ai-win-desc{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.8;margin-bottom:16px;}
+.ai-win-features{display:flex;flex-direction:column;gap:8px;}
+.ai-win-feat{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:rgba(255,255,255,0.6);}
+.ai-win-feat::before{content:'›';color:var(--teal2);font-weight:700;font-size:14px;line-height:1.2;flex-shrink:0;}
+.ai-win-feat strong{color:white;font-weight:600;}
+.ai-win-status{margin-top:18px;padding:10px 14px;background:rgba(42,158,127,0.08);border:1px solid rgba(42,158,127,0.2);border-radius:8px;display:flex;align-items:center;gap:8px;}
+.ai-win-status-dot{width:7px;height:7px;border-radius:50%;background:var(--teal2);box-shadow:0 0 6px var(--teal2);animation:pulse 2s infinite;flex-shrink:0;}
+.ai-win-status-text{font-size:10px;font-weight:700;color:var(--teal2);letter-spacing:0.1em;text-transform:uppercase;}
 
 /* STATS BAR */
 .stats-bar{background:var(--teal);padding:56px 48px;}
@@ -307,20 +381,48 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
 
 @media(max-width:900px){
-  nav,section,.hero,.stats-bar,.cta-sec,footer{padding-left:24px;padding-right:24px;}
-  .hero,.two-col,.prob-grid,.mod-grid,.price-grid,.val-cards,.why-grid{grid-template-columns:1fr;}
+  nav,section,.hero,.stats-bar,.cta-sec,footer,.counters-bar{padding-left:24px;padding-right:24px;}
+  .hero,.two-col,.prob-grid,.mod-grid,.price-grid,.val-cards,.why-grid,.ai-windows-grid{grid-template-columns:1fr;}
   .proc-steps{grid-template-columns:1fr 1fr;}
   .proc-steps::before{display:none;}
   .hero-right{display:none;}
-  .stats-inner{grid-template-columns:1fr;}
+  .stats-inner,.counters-inner{grid-template-columns:1fr 1fr;}
   .stat-i{border-right:none;border-bottom:1px solid rgba(255,255,255,0.1);padding:20px 0;}
+  .counter-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);padding:20px 0;}
   .contact-card{flex-direction:column;}
   .contact-person{border-right:none;padding-right:0;border-bottom:1px solid var(--border);padding-bottom:16px;}
   footer{flex-direction:column;text-align:center;}
+  nav{top:56px;}
 }
 </style>
 </head>
 <body>
+
+<!-- FUTÓ LED SÁV — ELÉRHETŐSÉGEK -->
+<div class="led-bar" style="position:fixed;top:0;left:0;right:0;z-index:200;">
+  <div class="led-track" id="ledTrack">
+    <div class="led-item"><span class="led-dot"></span><span>📞 +36 30 694 3931</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>✉ interncomp2013@gmail.com</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>🌱 AI Vállalatirányítási Rendszer — Interncomp</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>⚡ 5 AI Ügynök — 24/7 Aktív</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>🔭 Pályázatfigyelő AI — Magyar & EU</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>📞 +36 30 694 3931</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>✉ interncomp2013@gmail.com</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>🌱 AI Vállalatirányítási Rendszer — Interncomp</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>⚡ 5 AI Ügynök — 24/7 Aktív</span></div>
+    <div class="led-sep">◆</div>
+    <div class="led-item"><span class="led-dot"></span><span>🔭 Pályázatfigyelő AI — Magyar & EU</span></div>
+    <div class="led-sep">◆</div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -342,11 +444,11 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 <section class="hero" style="border-top:none;">
   <div class="hero-bg"></div><div class="hero-dots"></div>
   <div class="hero-left">
-    <div class="hero-badge"><span class="badge-dot"></span><span id="hero_badge">AI Vállalatirányítás · 2026</span></div>
-    <h1 id="hero_h1">Ahol az adminisztráció <em>magától</em> fut — Ön pedig <span class="accent">növekedhet.</span></h1>
-    <p class="hero-desc" id="hero_desc">Intelligens AI ügynökök, ESG jelentés és pályázatfigyelő — egy rendszerben, amelyet Sinkovicz István közvetlenül kínál ki ügyfeleinek.</p>
+    <div class="hero-badge"><span class="badge-dot"></span><span id="hero_badge">AI Vállalatirányítási Rendszer · 2025</span></div>
+    <h1 id="hero_h1">Az <em>AI Vállalatirányítási Rendszer</em> — ahol az adminisztráció magától fut.</h1>
+    <p class="hero-desc" id="hero_desc">Az Interncomp AI Vállalatirányítási Rendszer intelligens ügynökei automatizálják a napi munkát. Sinkovicz István az AI vállalatirányítási rendszert közvetlenül kínálja ki ügyfeleinek.</p>
     <div class="hero-btns">
-      <a href="#pricing" class="btn-p" id="hero_cta1">Megnézem az ajánlatot</a>
+      <a href="#ai-windows" class="btn-p" id="hero_cta1">Megismerem a rendszert</a>
       <a href="#agents" class="btn-o" id="hero_cta2">Hogyan működik?</a>
     </div>
     <div class="hero-stats">
@@ -358,7 +460,7 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
   <div class="hero-right">
     <div class="float-b fb1"><span>⚡</span><span id="float1">Aktív · 24/7</span></div>
     <div class="hero-card">
-      <div class="card-title" id="card_title">AI Ügynök Rendszer</div>
+      <div class="card-title" id="card_title">AI Vállalatirányítási Rendszer</div>
       <div class="agent-row"><div class="a-icon">🎯</div><div><div class="a-name" id="a1s">Lead Kvalifikáló</div><div class="a-status"><span class="sdot"></span><span id="active">Aktív</span></div></div></div>
       <div class="agent-row"><div class="a-icon">📩</div><div><div class="a-name" id="a2s">Follow-up</div><div class="a-status"><span class="sdot"></span><span id="active2">Aktív</span></div></div></div>
       <div class="agent-row"><div class="a-icon">📋</div><div><div class="a-name" id="a3s">Dokumentumkezelő</div><div class="a-status"><span class="sdot"></span><span id="active3">Aktív</span></div></div></div>
@@ -370,23 +472,45 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
   </div>
 </section>
 
+<!-- SZÁMLÁLÓK -->
+<div class="counters-bar">
+  <div class="counters-inner reveal">
+    <div class="counter-item">
+      <span class="counter-num" data-target="68" data-suffix="%">0<span class="counter-suffix">%</span></span>
+      <div class="counter-label" id="cnt1">Az adminisztráció<br>automatizálható</div>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="5" data-suffix="+">0<span class="counter-suffix">+</span></span>
+      <div class="counter-label" id="cnt2">AI Ügynök<br>24/7 aktív</div>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="36" data-suffix="">0<span class="counter-suffix"> óra</span></span>
+      <div class="counter-label" id="cnt3">Megtakarítás<br>havonta / cég</div>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="500" data-suffix="M+">0<span class="counter-suffix">M+</span></span>
+      <div class="counter-label" id="cnt4">EUR pályázati forrás<br>évente elérhető</div>
+    </div>
+  </div>
+</div>
+
 <!-- PROBLEM -->
 <section class="prob-sec">
   <div class="eyebrow" id="prob_ey">A valóság</div>
-  <h2 id="prob_h2">Amit ma <em>kézzel</em> csinál —<br>holnap automatizálható.</h2>
-  <p class="sub" id="prob_sub">A legtöbb könyvelő, adótanácsadó és cégeladási iroda ugyanazokkal a repetitív problémákkal küzd nap mint nap.</p>
+  <h2 id="prob_h2">Amit ma <em>kézzel</em> csinál —<br>az AI vállalatirányítási rendszer elvégzi.</h2>
+  <p class="sub" id="prob_sub">A legtöbb könyvelő, adótanácsadó és cégeladási iroda ugyanazokkal a repetitív problémákkal küzd. Az AI vállalatirányítási rendszer ezeket mind megoldja.</p>
   <div class="prob-grid reveal">
-    <div class="prob-card"><div class="prob-num">01</div><div class="prob-icon">📉</div><div class="prob-title" id="p1t">Elveszett érdeklődők</div><div class="prob-desc" id="p1d">Minden lassan megválaszolt ajánlatkérés egy ügyfél, aki a versenytársnál köt ki.</div></div>
-    <div class="prob-card"><div class="prob-num">02</div><div class="prob-icon">📂</div><div class="prob-title" id="p2t">Repetitív adminisztráció</div><div class="prob-desc" id="p2d">Dokumentumok bekérése, ellenőrzése, emlékeztetők — értékes emberi kapacitás pazarlása.</div></div>
-    <div class="prob-card"><div class="prob-num">03</div><div class="prob-icon">⏳</div><div class="prob-title" id="p3t">Határidők kockázata</div><div class="prob-desc" id="p3d">Adóbevallások, éves zárlatok — ha a figyelés emberi memóriára támaszkodik, elcsúszik valami.</div></div>
-    <div class="prob-card"><div class="prob-num">04</div><div class="prob-icon">📊</div><div class="prob-title" id="p4t">Skálázás falai</div><div class="prob-desc" id="p4d">Ahogy nő az ügyfélszám, az adminisztratív teher arányosan nő.</div></div>
+    <div class="prob-card"><div class="prob-num">01</div><div class="prob-icon">📉</div><div class="prob-title" id="p1t">Elveszett érdeklődők</div><div class="prob-desc" id="p1d">Minden lassan megválaszolt ajánlatkérés egy ügyfél, aki a versenytársnál köt ki. Az AI vállalatirányítási rendszer azonnal válaszol.</div></div>
+    <div class="prob-card"><div class="prob-num">02</div><div class="prob-icon">📂</div><div class="prob-title" id="p2t">Repetitív adminisztráció</div><div class="prob-desc" id="p2d">Dokumentumok bekérése, ellenőrzése, emlékeztetők — az AI vállalatirányítási rendszer automatikusan elvégzi mindezt.</div></div>
+    <div class="prob-card"><div class="prob-num">03</div><div class="prob-icon">⏳</div><div class="prob-title" id="p3t">Határidők kockázata</div><div class="prob-desc" id="p3d">Adóbevallások, éves zárlatok — az AI vállalatirányítási rendszer proaktívan figyeli és jelzi az összes határidőt.</div></div>
+    <div class="prob-card"><div class="prob-num">04</div><div class="prob-icon">📊</div><div class="prob-title" id="p4t">Skálázás falai</div><div class="prob-desc" id="p4d">Az AI vállalatirányítási rendszer 100 ügyfelet ugyanolyan hatékonyan kezel mint egyet — emberi kapacitás korlát nélkül.</div></div>
   </div>
 </section>
 
 <!-- AGENTS -->
 <section id="agents">
   <div class="eyebrow" id="ag_ey">A megoldás</div>
-  <h2 id="ag_h2">5 intelligens ügynök, <em>egy összehangolt rendszer.</em></h2>
+  <h2 id="ag_h2">5 AI ügynök — <em>egy teljes vállalatirányítási rendszer.</em></h2>
   <div class="two-col">
     <div>
       <div class="agent-list stag reveal">
@@ -411,7 +535,7 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
     </div>
     <div class="rr">
       <div class="why-box">
-        <div class="why-title" id="why_title">Miért AI ügynök?</div>
+        <div class="why-title" id="why_title">Miért AI vállalatirányítási rendszer?</div>
         <div class="why-list">
           <div class="why-item"><div class="wcheck">✓</div><div class="wtext"><strong id="w1b">24/7 működik</strong> — <span id="w1">hétvégén és éjjel is, betegség és szabadság nélkül</span></div></div>
           <div class="why-item"><div class="wcheck">✓</div><div class="wtext"><strong id="w2b">Skálázható</strong> — <span id="w2">100 ügyfelet ugyanolyan jól kezel mint egyet</span></div></div>
@@ -427,61 +551,96 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stats-inner reveal">
-    <div class="stat-i"><div class="stat-num">3×</div><div class="stat-label" id="st1">gyorsabb ügyfélkezelés automatizálással</div></div>
-    <div class="stat-i"><div class="stat-num">68%</div><div class="stat-label" id="st2">adminisztratív feladatok automatizálható aránya</div></div>
-    <div class="stat-i"><div class="stat-num">24/7</div><div class="stat-label" id="st3">folyamatos működés — hétvégén és éjjel is</div></div>
+    <div class="stat-i"><div class="stat-num">3×</div><div class="stat-label" id="st1">gyorsabb ügyfélkezelés<br>az AI rendszerrel</div></div>
+    <div class="stat-i"><div class="stat-num">68%</div><div class="stat-label" id="st2">adminisztratív feladatok<br>automatizálható aránya</div></div>
+    <div class="stat-i"><div class="stat-num">24/7</div><div class="stat-label" id="st3">folyamatos működés —<br>hétvégén és éjjel is</div></div>
   </div>
 </div>
 
-<!-- MODULES -->
-<section class="modules-sec" id="modules">
-  <div class="eyebrow" id="mod_ey">Prémium modulok</div>
-  <h2 id="mod_h2">Két modul, amit <em>más nem kínál</em><br>egy csomagban.</h2>
-  <p class="sub" id="mod_sub">Az AI ügynök rendszer mellé két különleges modult is kap — amelyek önmagukban is komoly értéket képviselnek az Ön ügyfeleinek.</p>
-  <div class="mod-grid reveal">
-    <!-- ESG -->
-    <div class="mod-card esg">
-      <div class="mod-head esg">
-        <div class="mod-head-top">
-          <div class="mod-icon esg">🌱</div>
-          <div><div class="mod-badge esg" id="esg_badge">ESG Modul</div><div class="mod-title" id="esg_title">ESG Jelentés AI</div></div>
-        </div>
-        <p class="mod-desc" id="esg_desc">Automatikus ESG riportok generálása — amit az EU hamarosan kötelezővé tesz minden vállalkozásnak. Az Ön ügyfelei elsők között lesznek felkészülve.</p>
+<!-- 3 AI VÁLLALATIRÁNYÍTÁSI RENDSZER ABLAK -->
+<section class="ai-windows-sec" id="ai-windows">
+  <div class="eyebrow" id="mod_ey">AI Vállalatirányítási Rendszer</div>
+  <h2 id="mod_h2">3 modul, amit <em>más rendszer nem kínál</em><br>egy csomagban.</h2>
+  <p class="sub" id="mod_sub">Az Interncomp AI Vállalatirányítási Rendszer 3 egyedi modulból áll — ezek más rendszernél nem léteznek ilyen integrált formában.</p>
+
+  <div class="ai-windows-grid reveal">
+
+    <!-- ABLAK 1: AI ÜGYNÖK RENDSZER -->
+    <div class="ai-window">
+      <div class="ai-window-titlebar">
+        <div class="win-dots"><div class="win-dot red"></div><div class="win-dot yellow"></div><div class="win-dot green"></div></div>
+        <div class="win-title-text" id="win1_title">AI Ügynök Modul</div>
       </div>
-      <div class="mod-body">
-        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f1"><strong>Automatikus riport generálás</strong> — cég adatai alapján percek alatt kész ESG jelentés</div></div>
-        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f2"><strong>EU Taxonomy & CSRD megfelelőség</strong> — automatikus ellenőrzés és javaslatok</div></div>
-        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f3"><strong>Digitális tanúsítvány</strong> — letölthető, megosztható ESG igazolás</div></div>
-        <div class="mod-feat"><div class="mcheck esg">✓</div><div class="mod-feat-text" id="esg_f4"><strong>Éves összehasonlítás</strong> — fejlődés nyomon követése és vizualizálása</div></div>
-        <div class="mod-alert esg">
-          <div class="mod-alert-title esg" id="esg_al_t">⚠️ Miért sürgős?</div>
-          <div class="mod-alert-text" id="esg_al_d">A CSRD irányelv alapján 2025-től egyre több vállalkozásnak kötelező az ESG jelentés. Aki most felkészül, versenyelőnyt szerez.</div>
+      <div class="ai-window-body">
+        <div class="ai-win-icon">🤖</div>
+        <div class="ai-win-badge" id="win1_badge">AI VÁLLALATIRÁNYÍTÁS · MODUL 1</div>
+        <div class="ai-win-title" id="win1_name">AI Ügynök Rendszer</div>
+        <div class="ai-win-desc" id="win1_desc">Az AI vállalatirányítási rendszer 5 ügynöke teljes körűen elvégzi a lead kezelést, dokumentumok gyűjtését, határidők figyelését és az ügyfélkommunikációt.</div>
+        <div class="ai-win-features">
+          <div class="ai-win-feat" id="win1_f1"><strong>Lead Kvalifikáló</strong> — azonnali válasz minden érdeklődőnek</div>
+          <div class="ai-win-feat" id="win1_f2"><strong>Follow-up sorozat</strong> — intelligens nyomonkövetés</div>
+          <div class="ai-win-feat" id="win1_f3"><strong>Dokumentumkezelés</strong> — automatikus bekérés és ellenőrzés</div>
+          <div class="ai-win-feat" id="win1_f4"><strong>Határidő-figyelő</strong> — minden ügyfélnél, minden határidőre</div>
         </div>
-      </div>
-    </div>
-    <!-- TENDER -->
-    <div class="mod-card tender">
-      <div class="mod-head tender">
-        <div class="mod-head-top">
-          <div class="mod-icon tender">🔭</div>
-          <div><div class="mod-badge tender" id="ten_badge">Pályázat Modul</div><div class="mod-title" id="ten_title">Pályázatfigyelő AI</div></div>
-        </div>
-        <p class="mod-desc" id="ten_desc">Magyar és EU-s pályázatok valós idejű figyelése — az AI automatikusan megmondja melyik pályázat illik az adott céghez, és értesíti mielőtt lejár a határidő.</p>
-      </div>
-      <div class="mod-body">
-        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f1"><strong>Magyar pályázatok</strong> — Széchenyi, GINOP, RRF, NTP és egyéb hazai alapok figyelése</div></div>
-        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f2"><strong>EU-s pályázatok</strong> — Horizon Europe, Cohesion Funds, Interreg és más uniós programok</div></div>
-        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f3"><strong>AI illesztés</strong> — automatikusan meghatározza melyik pályázat illik az adott cégprofil alapján</div></div>
-        <div class="mod-feat"><div class="mcheck tender">✓</div><div class="mod-feat-text" id="ten_f4"><strong>Automatikus értesítés</strong> — email/SMS riasztás határidő előtt, soha nem marad le pályázatról</div></div>
-        <div class="mod-alert tender">
-          <div class="mod-alert-title tender" id="ten_al_t">💡 Mekkora lehetőség?</div>
-          <div class="mod-alert-text" id="ten_al_d">Évente több száz milliárd forint pályázati forrás áll rendelkezésre. A legtöbb KKV azért nem pályázik, mert nem tudja időben, hogy mire jogosult.</div>
+        <div class="ai-win-status">
+          <div class="ai-win-status-dot"></div>
+          <div class="ai-win-status-text" id="win1_status">Aktív — 24/7 működik</div>
         </div>
       </div>
     </div>
+
+    <!-- ABLAK 2: ESG MODUL -->
+    <div class="ai-window">
+      <div class="ai-window-titlebar">
+        <div class="win-dots"><div class="win-dot red"></div><div class="win-dot yellow"></div><div class="win-dot green"></div></div>
+        <div class="win-title-text" id="win2_title">ESG Jelentés Modul</div>
+      </div>
+      <div class="ai-window-body">
+        <div class="ai-win-icon">🌱</div>
+        <div class="ai-win-badge" id="win2_badge">AI VÁLLALATIRÁNYÍTÁS · MODUL 2</div>
+        <div class="ai-win-title" id="win2_name">ESG Jelentés AI</div>
+        <div class="ai-win-desc" id="win2_desc">Az AI vállalatirányítási rendszer ESG modulja automatikusan generál EU-megfelelő riportokat. A CSRD 2025-től kötelező — az Interncomp ügyfelei elsők között teljesítik.</div>
+        <div class="ai-win-features">
+          <div class="ai-win-feat" id="win2_f1"><strong>Automatikus riport</strong> — percek alatt kész ESG jelentés</div>
+          <div class="ai-win-feat" id="win2_f2"><strong>EU Taxonomy & CSRD</strong> — megfelelőség garantálva</div>
+          <div class="ai-win-feat" id="win2_f3"><strong>Digitális tanúsítvány</strong> — letölthető, megosztható</div>
+          <div class="ai-win-feat" id="win2_f4"><strong>Éves összehasonlítás</strong> — fejlődés nyomon követve</div>
+        </div>
+        <div class="ai-win-status">
+          <div class="ai-win-status-dot"></div>
+          <div class="ai-win-status-text" id="win2_status">Aktív — ESG adatbázis naprakész</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABLAK 3: PÁLYÁZATFIGYELŐ -->
+    <div class="ai-window">
+      <div class="ai-window-titlebar">
+        <div class="win-dots"><div class="win-dot red"></div><div class="win-dot yellow"></div><div class="win-dot green"></div></div>
+        <div class="win-title-text" id="win3_title">Pályázatfigyelő Modul</div>
+      </div>
+      <div class="ai-window-body">
+        <div class="ai-win-icon">🔭</div>
+        <div class="ai-win-badge" id="win3_badge">AI VÁLLALATIRÁNYÍTÁS · MODUL 3</div>
+        <div class="ai-win-title" id="win3_name">Pályázatfigyelő AI</div>
+        <div class="ai-win-desc" id="win3_desc">Az AI vállalatirányítási rendszer valós időben figyeli az összes magyar és EU-s pályázatot, és automatikusan illeszti a cég profiljához.</div>
+        <div class="ai-win-features">
+          <div class="ai-win-feat" id="win3_f1"><strong>Magyar pályázatok</strong> — Széchenyi, GINOP, RRF, NTP</div>
+          <div class="ai-win-feat" id="win3_f2"><strong>EU pályázatok</strong> — Horizon, Cohesion, Interreg</div>
+          <div class="ai-win-feat" id="win3_f3"><strong>AI illesztés</strong> — melyik pályázat illik a céghez</div>
+          <div class="ai-win-feat" id="win3_f4"><strong>Automatikus riasztás</strong> — határidő előtt értesítés</div>
+        </div>
+        <div class="ai-win-status">
+          <div class="ai-win-status-dot"></div>
+          <div class="ai-win-status-text" id="win3_status">Aktív — pályázatok figyelése folyamatos</div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="mod-bar reveal">
-    <div class="mod-bar-text" id="mod_bar_t">Mindkét modul <em>benne van</em> a Business és Enterprise csomagban.</div>
+
+  <div class="mod-bar reveal" style="margin-top:32px;">
+    <div class="mod-bar-text" id="mod_bar_t">Mind a 3 modul <em>benne van</em> a Business és Enterprise csomagban.</div>
     <a href="#pricing" class="mod-bar-btn" id="mod_bar_btn">Megnézem az árakat →</a>
   </div>
 </section>
@@ -489,21 +648,21 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 <!-- WHY NOW -->
 <section class="why-sec">
   <div class="eyebrow" id="why_ey">Miért most?</div>
-  <h2 id="why_h2">Három ok, amiért <em>érdemes</em><br>most lépni.</h2>
+  <h2 id="why_h2">Három ok, amiért az AI vállalatirányítási rendszer <em>most szükséges.</em></h2>
   <div class="why-grid">
     <div class="rl">
       <div class="why-cards">
-        <div class="why-card green"><div class="wc-label green" id="wc1l">⏱ Idő = pénz</div><div class="wc-text" id="wc1t">Egy átlagos KKV heti <strong>8-12 órát</strong> tölt adminisztrációval, amit AI-jal percekre lehet csökkenteni. Ez évi több száz munkaóra megtakarítás.</div></div>
-        <div class="why-card gold"><div class="wc-label gold" id="wc2l">🏆 Pályázati forrás</div><div class="wc-text" id="wc2t">Évente <strong>több száz milliárd forint</strong> pályázati forrás érhető el — a legtöbb cég azért nem pályázik, mert nem tudja időben, hogy mire jogosult.</div></div>
-        <div class="why-card red"><div class="wc-label red" id="wc3l">⚠️ ESG kötelező lesz</div><div class="wc-text" id="wc3t">A CSRD irányelv alapján <strong>2025-től egyre több vállalkozásnak</strong> kötelező az ESG jelentés. Aki most felkészül, elkerüli a bírságot és versenyelőnyre tesz szert.</div></div>
+        <div class="why-card green"><div class="wc-label green" id="wc1l">⏱ Idő = pénz</div><div class="wc-text" id="wc1t">Egy átlagos KKV heti <strong>8-12 órát</strong> tölt adminisztrációval. Az AI vállalatirányítási rendszer ezt percekre csökkenti — évi több száz munkaóra megtakarítás.</div></div>
+        <div class="why-card gold"><div class="wc-label gold" id="wc2l">🏆 Pályázati forrás</div><div class="wc-text" id="wc2t">Évente <strong>több száz milliárd forint</strong> pályázati forrás érhető el. Az AI vállalatirányítási rendszer automatikusan megtalálja a megfelelő pályázatokat.</div></div>
+        <div class="why-card red"><div class="wc-label red" id="wc3l">⚠️ ESG kötelező</div><div class="wc-text" id="wc3t">A CSRD irányelv alapján <strong>2025-től egyre több vállalkozásnak</strong> kötelező az ESG jelentés. Az AI vállalatirányítási rendszer ezt automatikusan teljesíti.</div></div>
       </div>
     </div>
     <div class="rr">
       <div class="val-cards stag reveal">
-        <div class="val-card"><div class="vc-icon">⚡</div><div class="vc-title" id="v1t">Azonnal működik</div><div class="vc-desc" id="v1d">Nincs hosszú bevezetési projekt — az első ügynökök 2-3 héten belül élesek.</div></div>
+        <div class="val-card"><div class="vc-icon">⚡</div><div class="vc-title" id="v1t">Azonnal működik</div><div class="vc-desc" id="v1d">Az AI vállalatirányítási rendszer első ügynökei 2-3 héten belül élesek.</div></div>
         <div class="val-card"><div class="vc-icon">🔒</div><div class="vc-title" id="v2t">Biztonságos</div><div class="vc-desc" id="v2d">Az adatok az Ön rendszerében maradnak — GDPR megfelelő megoldás.</div></div>
-        <div class="val-card"><div class="vc-icon">📈</div><div class="vc-title" id="v3t">Mérhető eredmény</div><div class="vc-desc" id="v3d">Minden hónapban riport — pontosan látja hány órát és forintot takarított meg.</div></div>
-        <div class="val-card"><div class="vc-icon">🤝</div><div class="vc-title" id="v4t">Személyes támogatás</div><div class="vc-desc" id="v4d">Sinkó István személyesen segít a bevezetésben és az első lépésekben.</div></div>
+        <div class="val-card"><div class="vc-icon">📈</div><div class="vc-title" id="v3t">Mérhető eredmény</div><div class="vc-desc" id="v3d">Minden hónapban riport — pontosan látja hány órát takarított meg.</div></div>
+        <div class="val-card"><div class="vc-icon">🤝</div><div class="vc-title" id="v4t">Személyes támogatás</div><div class="vc-desc" id="v4d">Sinkovicz István személyesen segít a bevezetésben és az első lépésekben.</div></div>
       </div>
       <div class="time-box">
         <div class="tb-title" id="tb_title">Mennyi időt takarít meg?</div>
@@ -519,21 +678,21 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 <!-- PROCESS -->
 <section class="proc-sec">
   <div class="eyebrow" id="proc_ey">A folyamat</div>
-  <h2 id="proc_h2">Négy lépés a <em>működő rendszerig.</em></h2>
-  <p class="sub" id="proc_sub">Gyors, strukturált megvalósítás — az első eredmények már 2-3 héten belül láthatók.</p>
+  <h2 id="proc_h2">Négy lépés az <em>éles AI vállalatirányítási rendszerig.</em></h2>
+  <p class="sub" id="proc_sub">Gyors, strukturált megvalósítás — az AI vállalatirányítási rendszer első eredményei már 2-3 héten belül láthatók.</p>
   <div class="proc-steps stag reveal">
     <div class="proc-step"><div class="step-circle">01</div><div class="step-title" id="s1t">Discovery</div><div class="step-desc" id="s1d">Folyamatok feltérképezése, automatizálható pontok azonosítása.</div><span class="step-time" id="s1tm">~2 óra</span></div>
     <div class="proc-step"><div class="step-circle">02</div><div class="step-title" id="s2t">MVP Fejlesztés</div><div class="step-desc" id="s2d">Az első 2 ügynök megépítése és tesztelése valós adatokkal.</div><span class="step-time" id="s2tm">2–3 hét</span></div>
     <div class="proc-step"><div class="step-circle">03</div><div class="step-title" id="s3t">Integráció</div><div class="step-desc" id="s3d">Bekötés a meglévő eszközökhöz, onboarding, átadás.</div><span class="step-time" id="s3tm">1 hét</span></div>
-    <div class="proc-step"><div class="step-circle">04</div><div class="step-title" id="s4t">Skálázás</div><div class="step-desc" id="s4d">Bővítés és partner ügyfelek onboardolása EU-szerte.</div><span class="step-time" id="s4tm">Folyamatos</span></div>
+    <div class="proc-step"><div class="step-circle">04</div><div class="step-title" id="s4t">Skálázás</div><div class="step-desc" id="s4d">Az AI vállalatirányítási rendszer bővítése és partner onboardolás.</div><span class="step-time" id="s4tm">Folyamatos</span></div>
   </div>
 </section>
 
 <!-- PRICING -->
 <section class="price-sec" id="pricing">
   <div class="eyebrow" id="pr_ey">Befektetés</div>
-  <h2 id="pr_h2">Havi előfizetés, <em>mérhető megtérülés.</em></h2>
-  <p class="sub" id="pr_sub">Nincs nagy egyszeri beruházás — havi előfizetéssel elindulhat, és azonnal értékesítheti Sinkó István ügyfelei felé.</p>
+  <h2 id="pr_h2">Havi előfizetés — <em>az AI vállalatirányítási rendszer azonnal elindul.</em></h2>
+  <p class="sub" id="pr_sub">Nincs nagy egyszeri beruházás — havi előfizetéssel az AI vállalatirányítási rendszer azonnal elérhető Sinkovicz István ügyfelei számára.</p>
   <div class="price-grid stag reveal">
     <div class="pc">
       <div class="pc-tier" id="t1tier">Belépő</div>
@@ -558,11 +717,11 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
       <div class="pc-name">Business</div>
       <div class="pc-billing" id="billing2">Havi előfizetés</div>
       <div class="pc-amount"><sup>€</sup>1.000</div>
-      <div class="pc-period" id="t2per">/ hó · 5 ügynök + modulok</div>
+      <div class="pc-period" id="t2per">/ hó · 3 modul + 5 ügynök</div>
       <div class="pc-annual" id="t2ann">= €12.000 / év</div>
       <div class="pc-div"></div>
       <ul class="pc-features">
-        <li><strong id="f_5ag">5 AI ügynök</strong> — <span id="f_5ag2">teljes stack</span></li>
+        <li><strong id="f_5ag">AI Ügynök Rendszer</strong> — <span id="f_5ag2">teljes stack</span></li>
         <li><strong id="f_esg">🌱 ESG Jelentés AI</strong> <span id="f_esg2">modul</span></li>
         <li><strong id="f_ten">🔭 Pályázatfigyelő AI</strong> <span id="f_ten2">modul</span></li>
         <li id="f_crm">CRM integráció</li>
@@ -595,8 +754,8 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
   <div class="cta-glow"></div>
   <div class="cta-inner reveal">
     <div class="eyebrow" style="justify-content:center;" id="cta_ey">Következő lépés</div>
-    <h2 id="cta_h2">Kezdjük el <em>együtt!.</em></h2>
-    <p id="cta_p">Lépjen kapcsolatba Sinkovicz Istvánnal — egy rövid egyeztetés után pontosan látni fogja, mit hozhat az AI rendszer az Ön vállalkozásának.</p>
+    <h2 id="cta_h2">Az AI vállalatirányítási rendszer <em>készen áll.</em></h2>
+    <p id="cta_p">Lépjen kapcsolatba Sinkovicz Istvánnal — az AI vállalatirányítási rendszer egy rövid egyeztetés után azonnal elindítható az Ön vállalkozásában.</p>
     <div class="cta-btns">
       <a href="tel:+36306943931" class="btn-p">📞 +36 30 694 3931</a>
       <a href="mailto:interncomp2013@gmail.com" class="btn-o">✉ interncomp2013@gmail.com</a>
@@ -615,7 +774,7 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 
 <footer>
   <div class="fbrand">Interncomp <span>AI</span></div>
-  <div class="fmid" id="f_mid">AI Vállalatirányítás · 2025</div>
+  <div class="fmid" id="f_mid">AI Vállalatirányítási Rendszer · 2025</div>
   <div class="fright" id="f_right">Sinkovicz István · +36 30 694 3931</div>
 </footer>
 
@@ -624,98 +783,102 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 const T = {
   hu:{
     nav_esg:"🌱 ESG & Pályázat", nav_cta:"Kapcsolat",
-    hero_badge:"AI Vállalatirányítás · 2025",
-    hero_h1:"Ahol az adminisztráció <em>magától</em> fut — Ön pedig <span class='accent'>növekedhet.</span>",
-    hero_desc:"Intelligens AI ügynökök, ESG jelentés és pályázatfigyelő — egy rendszerben, amelyet Sinkó István közvetlenül kínál ki ügyfeleinek.",
-    hero_cta1:"Megnézem az ajánlatot", hero_cta2:"Hogyan működik?",
+    hero_badge:"AI Vállalatirányítási Rendszer · 2025",
+    hero_h1:"Az <em>AI Vállalatirányítási Rendszer</em> — ahol az adminisztráció magától fut.",
+    hero_desc:"Az Interncomp AI Vállalatirányítási Rendszer intelligens ügynökei automatizálják a napi munkát. Sinkovicz István az AI vállalatirányítási rendszert közvetlenül kínálja ki ügyfeleinek.",
+    hero_cta1:"Megismerem a rendszert", hero_cta2:"Hogyan működik?",
     hstat1:"adminisztráció automatizálható", hstat2:"elérhető pályázati forrás évente", hstat3:"ESG kötelező egyre több cégnek",
     float1:"Aktív · 24/7", float2:"ESG · Pályázat · AI",
-    card_title:"AI Ügynök Rendszer",
-    a1s:"Lead Kvalifikáló", a2s:"Follow-up", a3s:"Dokumentum-kezelő", a4s:"Határidő-figyelő", a5s:"Ügyfélportál",
+    card_title:"AI Vállalatirányítási Rendszer",
+    a1s:"Lead Kvalifikáló", a2s:"Follow-up", a3s:"Dokumentumkezelő", a4s:"Határidő-figyelő", a5s:"Ügyfélportál",
     active:"Aktív", active2:"Aktív", active3:"Aktív", active4:"Aktív", active5:"Aktív",
     more_agents:"+ 10 további ügynök elérhető",
+    cnt1:"Az adminisztráció<br>automatizálható", cnt2:"AI Ügynök<br>24/7 aktív", cnt3:"Megtakarítás<br>havonta / cég", cnt4:"EUR pályázati forrás<br>évente elérhető",
     prob_ey:"A valóság",
-    prob_h2:"Amit ma <em>kézzel</em> csinál —<br>holnap automatizálható.",
-    prob_sub:"A legtöbb könyvelő, adótanácsadó és cégeladási iroda ugyanazokkal a repetitív problémákkal küzd nap mint nap.",
-    p1t:"Elveszett érdeklődők", p1d:"Minden lassan megválaszolt ajánlatkérés egy ügyfél, aki a versenytársnál köt ki.",
-    p2t:"Repetitív adminisztráció", p2d:"Dokumentumok bekérése, ellenőrzése, emlékeztetők — értékes emberi kapacitás pazarlása.",
-    p3t:"Határidők kockázata", p3d:"Adóbevallások, éves zárlatok — ha a figyelés emberi memóriára támaszkodik, elcsúszik valami.",
-    p4t:"Skálázás falai", p4d:"Ahogy nő az ügyfélszám, az adminisztratív teher arányosan nő.",
+    prob_h2:"Amit ma <em>kézzel</em> csinál —<br>az AI vállalatirányítási rendszer elvégzi.",
+    prob_sub:"A legtöbb könyvelő, adótanácsadó és cégeladási iroda ugyanazokkal a repetitív problémákkal küzd. Az AI vállalatirányítási rendszer ezeket mind megoldja.",
+    p1t:"Elveszett érdeklődők", p1d:"Az AI vállalatirányítási rendszer azonnal válaszol minden ajánlatkérésre.",
+    p2t:"Repetitív adminisztráció", p2d:"Az AI vállalatirányítási rendszer automatikusan elvégzi a dokumentumkezelést.",
+    p3t:"Határidők kockázata", p3d:"Az AI vállalatirányítási rendszer proaktívan figyeli az összes határidőt.",
+    p4t:"Skálázás falai", p4d:"Az AI vállalatirányítási rendszer 100 ügyfelet kezel emberi korlát nélkül.",
     ag_ey:"A megoldás",
-    ag_h2:"5 intelligens ügynök, <em>egy összehangolt rendszer.</em>",
+    ag_h2:"5 AI ügynök — <em>egy teljes vállalatirányítási rendszer.</em>",
     a1n:"Lead Kvalifikáló Ügynök", a1d:"Automatikusan minősíti az érdeklődőket és azonnal személyre szabott választ küld — 24/7.",
-    a2n:"Follow-up Ügynök", a2d:"Ajánlat után intelligens nyomonkövetési sorozatot indít. Nem enged el potenciális ügyfelet.",
+    a2n:"Follow-up Ügynök", a2d:"Ajánlat után intelligens nyomonkövetési sorozatot indít.",
     a3n:"Dokumentum-összegyűjtő Ügynök", a3d:"Cégalapítási és könyvelési iratok bekérése, ellenőrzése — teljesen automatizáltan.",
-    a4n:"Határidő-figyelő Ügynök", a4d:"Adóbevallások, éves zárlatok proaktív kezelése. Minden ügyfélnél, minden határidőre.",
-    a5n:"Ügyfélportál Chatbot", a5d:"Ügyfelek önkiszolgálóan lekérdezhetik státuszukat és dokumentumaikat.",
+    a4n:"Határidő-figyelő Ügynök", a4d:"Adóbevallások, éves zárlatok proaktív kezelése. Minden ügyfélnél.",
+    a5n:"Ügyfélportál Chatbot", a5d:"Ügyfelek önkiszolgálóan lekérdezhetik státuszukat.",
     ph1:"I. fázis", ph1b:"I. fázis", ph2:"II. fázis", ph2b:"II. fázis", ph3:"III. fázis",
     extra_tog:"⚡ + További ügynökök — kattintson a megtekintéshez",
-    ec1c:"Értékesítés", ec1n:"Ajánlatkérés-elemző", ec1d:"Bejövő kérések automatikus elemzése és prioritizálása.",
-    ec2c:"Reputáció", ec2n:"Értékelés-gyűjtő", ec2d:"Google / Trustpilot értékelések automatikus kezelése.",
-    ec3c:"Riport", ec3n:"Havi Riport Ügynök", ec3d:"Automatikus havi összefoglaló a vezetőnek.",
-    ec4c:"Nemzetközi", ec4n:"Fordító Ügynök", ec4d:"Dokumentumok és ajánlatok 10 nyelven.",
+    ec1c:"Értékesítés", ec1n:"Ajánlatkérés-elemző", ec1d:"Bejövő kérések automatikus elemzése.",
+    ec2c:"Reputáció", ec2n:"Értékelés-gyűjtő", ec2d:"Google / Trustpilot értékelések kezelése.",
+    ec3c:"Riport", ec3n:"Havi Riport Ügynök", ec3d:"Automatikus havi összefoglaló.",
+    ec4c:"Nemzetközi", ec4n:"Fordító Ügynök", ec4d:"Dokumentumok 10 nyelven.",
     ec5c:"Marketing", ec5n:"Tartalom-generáló", ec5d:"LinkedIn posztok, hírlevelek automatikusan.",
     ec6c:"Intelligencia", ec6n:"Piaci Radar", ec6d:"Iparági hírek és versenytárs-figyelés.",
-    why_title:"Miért AI ügynök?",
+    why_title:"Miért AI vállalatirányítási rendszer?",
     w1b:"24/7 működik", w1:"hétvégén és éjjel is, betegség és szabadság nélkül",
     w2b:"Skálázható", w2:"100 ügyfelet ugyanolyan jól kezel mint egyet",
     w3b:"Tanul és javul", w3:"minden interakcióból okosabb lesz",
     w4b:"GDPR megfelelő", w4:"az adatok az Ön rendszerében maradnak",
     w5b:"Azonnali eredmény", w5:"az első ügynökök 2-3 héten belül élesek",
-    st1:"gyorsabb ügyfélkezelés automatizálással",
-    st2:"adminisztratív feladatok automatizálható aránya",
-    st3:"folyamatos működés — hétvégén és éjjel is",
-    mod_ey:"Prémium modulok",
-    mod_h2:"Két modul, amit <em>más nem kínál</em><br>egy csomagban.",
-    mod_sub:"Az AI ügynök rendszer mellé két különleges modult is kap — amelyek önmagukban is komoly értéket képviselnek az Ön ügyfeleinek.",
-    esg_badge:"ESG Modul", esg_title:"ESG Jelentés AI",
-    esg_desc:"Automatikus ESG riportok generálása — amit az EU hamarosan kötelezővé tesz minden vállalkozásnak. Az Ön ügyfelei elsők között lesznek felkészülve.",
-    esg_f1:"<strong>Automatikus riport generálás</strong> — cég adatai alapján percek alatt kész ESG jelentés",
-    esg_f2:"<strong>EU Taxonomy & CSRD megfelelőség</strong> — automatikus ellenőrzés és javaslatok",
-    esg_f3:"<strong>Digitális tanúsítvány</strong> — letölthető, megosztható ESG igazolás",
-    esg_f4:"<strong>Éves összehasonlítás</strong> — fejlődés nyomon követése és vizualizálása",
-    esg_al_t:"⚠️ Miért sürgős?",
-    esg_al_d:"A CSRD irányelv alapján 2025-től egyre több vállalkozásnak kötelező az ESG jelentés. Aki most felkészül, versenyelőnyt szerez.",
-    ten_badge:"Pályázat Modul", ten_title:"Pályázatfigyelő AI",
-    ten_desc:"Magyar és EU-s pályázatok valós idejű figyelése — az AI automatikusan megmondja melyik pályázat illik az adott céghez.",
-    ten_f1:"<strong>Magyar pályázatok</strong> — Széchenyi, GINOP, RRF, NTP és egyéb hazai alapok figyelése",
-    ten_f2:"<strong>EU-s pályázatok</strong> — Horizon Europe, Cohesion Funds, Interreg és más uniós programok",
-    ten_f3:"<strong>AI illesztés</strong> — automatikusan meghatározza melyik pályázat illik az adott cégprofil alapján",
-    ten_f4:"<strong>Automatikus értesítés</strong> — email/SMS riasztás határidő előtt, soha nem marad le pályázatról",
-    ten_al_t:"💡 Mekkora lehetőség?",
-    ten_al_d:"Évente több száz milliárd forint pályázati forrás áll rendelkezésre. A legtöbb KKV azért nem pályázik, mert nem tudja időben, hogy mire jogosult.",
-    mod_bar_t:"Mindkét modul <em>benne van</em> a Business és Enterprise csomagban.",
+    st1:"gyorsabb ügyfélkezelés<br>az AI rendszerrel", st2:"adminisztratív feladatok<br>automatizálható aránya", st3:"folyamatos működés —<br>hétvégén és éjjel is",
+    mod_ey:"AI Vállalatirányítási Rendszer",
+    mod_h2:"3 modul, amit <em>más rendszer nem kínál</em><br>egy csomagban.",
+    mod_sub:"Az Interncomp AI Vállalatirányítási Rendszer 3 egyedi modulból áll — ezek más rendszernél nem léteznek ilyen integrált formában.",
+    win1_title:"AI Ügynök Modul", win1_badge:"AI VÁLLALATIRÁNYÍTÁS · MODUL 1", win1_name:"AI Ügynök Rendszer",
+    win1_desc:"Az AI vállalatirányítási rendszer 5 ügynöke teljes körűen elvégzi a lead kezelést, dokumentumok gyűjtését, határidők figyelését és az ügyfélkommunikációt.",
+    win1_f1:"<strong>Lead Kvalifikáló</strong> — azonnali válasz minden érdeklődőnek",
+    win1_f2:"<strong>Follow-up sorozat</strong> — intelligens nyomonkövetés",
+    win1_f3:"<strong>Dokumentumkezelés</strong> — automatikus bekérés és ellenőrzés",
+    win1_f4:"<strong>Határidő-figyelő</strong> — minden ügyfélnél, minden határidőre",
+    win1_status:"Aktív — 24/7 működik",
+    win2_title:"ESG Jelentés Modul", win2_badge:"AI VÁLLALATIRÁNYÍTÁS · MODUL 2", win2_name:"ESG Jelentés AI",
+    win2_desc:"Az AI vállalatirányítási rendszer ESG modulja automatikusan generál EU-megfelelő riportokat. A CSRD 2025-től kötelező — az Interncomp ügyfelei elsők között teljesítik.",
+    win2_f1:"<strong>Automatikus riport</strong> — percek alatt kész ESG jelentés",
+    win2_f2:"<strong>EU Taxonomy & CSRD</strong> — megfelelőség garantálva",
+    win2_f3:"<strong>Digitális tanúsítvány</strong> — letölthető, megosztható",
+    win2_f4:"<strong>Éves összehasonlítás</strong> — fejlődés nyomon követve",
+    win2_status:"Aktív — ESG adatbázis naprakész",
+    win3_title:"Pályázatfigyelő Modul", win3_badge:"AI VÁLLALATIRÁNYÍTÁS · MODUL 3", win3_name:"Pályázatfigyelő AI",
+    win3_desc:"Az AI vállalatirányítási rendszer valós időben figyeli az összes magyar és EU-s pályázatot, és automatikusan illeszti a cég profiljához.",
+    win3_f1:"<strong>Magyar pályázatok</strong> — Széchenyi, GINOP, RRF, NTP",
+    win3_f2:"<strong>EU pályázatok</strong> — Horizon, Cohesion, Interreg",
+    win3_f3:"<strong>AI illesztés</strong> — melyik pályázat illik a céghez",
+    win3_f4:"<strong>Automatikus riasztás</strong> — határidő előtt értesítés",
+    win3_status:"Aktív — pályázatok figyelése folyamatos",
+    mod_bar_t:"Mind a 3 modul <em>benne van</em> a Business és Enterprise csomagban.",
     mod_bar_btn:"Megnézem az árakat →",
     why_ey:"Miért most?",
-    why_h2:"Három ok, amiért <em>érdemes</em><br>most lépni.",
-    wc1l:"⏱ Idő = pénz", wc1t:"Egy átlagos KKV heti <strong>8-12 órát</strong> tölt adminisztrációval, amit AI-jal percekre lehet csökkenteni. Ez évi több száz munkaóra megtakarítás.",
-    wc2l:"🏆 Pályázati forrás", wc2t:"Évente <strong>több száz milliárd forint</strong> pályázati forrás érhető el — a legtöbb cég azért nem pályázik, mert nem tudja időben, hogy mire jogosult.",
-    wc3l:"⚠️ ESG kötelező lesz", wc3t:"A CSRD irányelv alapján <strong>2025-től egyre több vállalkozásnak</strong> kötelező az ESG jelentés. Aki most felkészül, elkerüli a bírságot és versenyelőnyre tesz szert.",
-    v1t:"Azonnal működik", v1d:"Nincs hosszú bevezetési projekt — az első ügynökök 2-3 héten belül élesek.",
-    v2t:"Biztonságos", v2d:"Az adatok az Ön rendszerében maradnak — GDPR megfelelő megoldás.",
-    v3t:"Mérhető eredmény", v3d:"Minden hónapban riport — pontosan látja hány órát és forintot takarított meg.",
-    v4t:"Személyes támogatás", v4d:"Sinkó István személyesen segít a bevezetésben és az első lépésekben.",
+    why_h2:"Három ok, amiért az AI vállalatirányítási rendszer <em>most szükséges.</em>",
+    wc1l:"⏱ Idő = pénz", wc1t:"Az AI vállalatirányítási rendszer heti <strong>8-12 óra</strong> adminisztrációt vált ki — ez évi több száz munkaóra megtakarítás.",
+    wc2l:"🏆 Pályázati forrás", wc2t:"Évente <strong>több száz milliárd forint</strong> pályázati forrás érhető el. Az AI vállalatirányítási rendszer automatikusan megtalálja a megfelelőket.",
+    wc3l:"⚠️ ESG kötelező", wc3t:"A CSRD alapján <strong>2025-től egyre több vállalkozásnak</strong> kötelező az ESG. Az AI vállalatirányítási rendszer ezt automatikusan teljesíti.",
+    v1t:"Azonnal működik", v1d:"Az AI vállalatirányítási rendszer első ügynökei 2-3 héten belül élesek.",
+    v2t:"Biztonságos", v2d:"Az adatok az Ön rendszerében maradnak — GDPR megfelelő.",
+    v3t:"Mérhető eredmény", v3d:"Minden hónapban riport az AI rendszer teljesítményéről.",
+    v4t:"Személyes támogatás", v4d:"Sinkovicz István személyesen segít a bevezetésben.",
     tb_title:"Mennyi időt takarít meg?",
     tb_r1:"Ajánlatkérések kezelése", tb_v1:"~4 óra/hét",
     tb_r2:"Dokumentumok bekérése", tb_v2:"~3 óra/hét",
     tb_r3:"Határidők figyelése", tb_v3:"~2 óra/hét",
     tb_total:"Összesen havonta", tb_vtotal:"~36 óra",
     proc_ey:"A folyamat",
-    proc_h2:"Négy lépés a <em>működő rendszerig.</em>",
-    proc_sub:"Gyors, strukturált megvalósítás — az első eredmények már 2-3 héten belül láthatók.",
+    proc_h2:"Négy lépés az <em>éles AI vállalatirányítási rendszerig.</em>",
+    proc_sub:"Az AI vállalatirányítási rendszer első eredményei már 2-3 héten belül láthatók.",
     s1t:"Discovery", s1d:"Folyamatok feltérképezése, automatizálható pontok azonosítása.", s1tm:"~2 óra",
-    s2t:"MVP Fejlesztés", s2d:"Az első 2 ügynök megépítése és tesztelése valós adatokkal.", s2tm:"2–3 hét",
+    s2t:"MVP Fejlesztés", s2d:"Az első 2 ügynök megépítése és tesztelése.", s2tm:"2–3 hét",
     s3t:"Integráció", s3d:"Bekötés a meglévő eszközökhöz, onboarding, átadás.", s3tm:"1 hét",
-    s4t:"Skálázás", s4d:"Bővítés és partner ügyfelek onboardolása EU-szerte.", s4tm:"Folyamatos",
+    s4t:"Skálázás", s4d:"Az AI vállalatirányítási rendszer bővítése és partner onboardolás.", s4tm:"Folyamatos",
     pr_ey:"Befektetés",
-    pr_h2:"Havi előfizetés, <em>mérhető megtérülés.</em>",
-    pr_sub:"Nincs nagy egyszeri beruházás — havi előfizetéssel elindulhat, és azonnal értékesítheti Sinkó István ügyfelei felé.",
+    pr_h2:"Havi előfizetés — <em>az AI vállalatirányítási rendszer azonnal elindul.</em>",
+    pr_sub:"Az AI vállalatirányítási rendszer havi előfizetéssel azonnal elérhető Sinkovicz István ügyfelei számára.",
     t1tier:"Belépő", t1per:"/ hó · 2 ügynök", t1ann:"= €3.600 / év", t1cta:"Kezdjük el",
-    t2tier:"Legtöbbet választott", t2per:"/ hó · 5 ügynök + modulok", t2ann:"= €12.000 / év", t2cta:"Ezt kérem",
+    t2tier:"Legtöbbet választott", t2per:"/ hó · 3 modul + 5 ügynök", t2ann:"= €12.000 / év", t2cta:"Ezt kérem",
     t3tier:"Teljes rendszer", t3per:"/ hó · korlátlan", t3ann:"Minden modul + dedikált support", t3cta:"Kapcsolatfelvétel",
     billing:"Havi előfizetés", billing2:"Havi előfizetés", billing3:"Havi előfizetés", featured:"Ajánlott",
     f_lead:"Lead Kvalifikáló Ügynök", f_fup:"Follow-up Ügynök", f_email:"Email integráció", f_rep:"Havi riport", f_on:"Alap onboarding",
-    f_5ag:"5 AI ügynök", f_5ag2:"teljes stack",
+    f_5ag:"AI Ügynök Rendszer", f_5ag2:"teljes stack",
     f_esg:"🌱 ESG Jelentés AI", f_esg2:"modul",
     f_ten:"🔭 Pályázatfigyelő AI", f_ten2:"modul",
     f_crm:"CRM integráció", f_sup:"Prioritás support",
@@ -725,105 +888,109 @@ const T = {
     f_ten3:"🔭 Pályázatfigyelő", f_ten4:"AI illesztés",
     f_dev:"Dedikált fejlesztői support",
     cta_ey:"Következő lépés",
-    cta_h2:"Kezdjük el <em>együtt.</em>",
-    cta_p:"Lépjen kapcsolatba Sinkovicz Istvánnal — egy rövid egyeztetés után pontosan látni fogja, mit hozhat az AI rendszer az Ön vállalkozásának.",
+    cta_h2:"Az AI vállalatirányítási rendszer <em>készen áll.</em>",
+    cta_p:"Lépjen kapcsolatba Sinkovicz Istvánnal — az AI vállalatirányítási rendszer azonnal elindítható az Ön vállalkozásában.",
     cp_title:"Interncomp — Ügyvezető", ci_tel:"Telefon", ci_email:"Email",
-    f_mid:"AI Vállalatirányítás · 2025", f_right:"Sinkovicz István · +36 30 694 3931"
+    f_mid:"AI Vállalatirányítási Rendszer · 2025", f_right:"Sinkovicz István · +36 30 694 3931"
   },
   en:{
     nav_esg:"🌱 ESG & Grants", nav_cta:"Contact",
-    hero_badge:"AI Business Management · 2025",
-    hero_h1:"Where administration <em>runs itself</em> — and you can <span class='accent'>grow.</span>",
-    hero_desc:"Intelligent AI agents, ESG reporting and grant monitoring — in one system, offered directly to clients by István Sinkó.",
-    hero_cta1:"View the proposal", hero_cta2:"How does it work?",
+    hero_badge:"AI Business Management System · 2025",
+    hero_h1:"The <em>AI Business Management System</em> — where administration runs itself.",
+    hero_desc:"The Interncomp AI Business Management System automates daily operations. István Sinkovicz offers the AI business management system directly to his clients.",
+    hero_cta1:"Discover the system", hero_cta2:"How does it work?",
     hstat1:"of administration automatable", hstat2:"available grant funding annually", hstat3:"ESG mandatory for more companies",
     float1:"Active · 24/7", float2:"ESG · Grants · AI",
-    card_title:"AI Agent System",
+    card_title:"AI Business Management System",
     a1s:"Lead Qualifier", a2s:"Follow-up", a3s:"Document Handler", a4s:"Deadline Monitor", a5s:"Client Portal",
     active:"Active", active2:"Active", active3:"Active", active4:"Active", active5:"Active",
     more_agents:"+ 10 more agents available",
+    cnt1:"Of administration<br>is automatable", cnt2:"AI Agents<br>active 24/7", cnt3:"Hours saved<br>per month / company", cnt4:"EUR in grants<br>available annually",
     prob_ey:"The reality",
-    prob_h2:"What you do <em>manually</em> today —<br>can be automated tomorrow.",
-    prob_sub:"Most accountants, tax advisors and company sales offices face the same repetitive problems every day.",
-    p1t:"Lost leads", p1d:"Every slowly answered enquiry is a client who ends up with a competitor.",
-    p2t:"Repetitive administration", p2d:"Document requests, checks, reminders — valuable human capacity wasted.",
-    p3t:"Deadline risk", p3d:"Tax filings, annual closings — if tracking relies on human memory, something will slip.",
-    p4t:"Scaling walls", p4d:"As client numbers grow, administrative burden grows proportionally.",
+    prob_h2:"What you do <em>manually</em> today —<br>the AI business management system handles it.",
+    prob_sub:"Most accountants, tax advisors and company sales offices face the same repetitive problems. The AI business management system solves all of them.",
+    p1t:"Lost leads", p1d:"The AI business management system responds to every enquiry instantly.",
+    p2t:"Repetitive administration", p2d:"The AI business management system handles all document management automatically.",
+    p3t:"Deadline risk", p3d:"The AI business management system proactively monitors every deadline.",
+    p4t:"Scaling walls", p4d:"The AI business management system handles 100 clients as well as one.",
     ag_ey:"The solution",
-    ag_h2:"5 intelligent agents, <em>one coordinated system.</em>",
+    ag_h2:"5 AI agents — <em>one complete business management system.</em>",
     a1n:"Lead Qualification Agent", a1d:"Automatically qualifies enquiries and sends personalised responses instantly — 24/7.",
-    a2n:"Follow-up Agent", a2d:"After sending a proposal, launches an intelligent timed follow-up sequence.",
+    a2n:"Follow-up Agent", a2d:"Launches intelligent follow-up sequences after sending proposals.",
     a3n:"Document Collection Agent", a3d:"Requests and verifies documents for company formation and accounting — fully automated.",
-    a4n:"Deadline Monitoring Agent", a4d:"Proactive management of tax filings and annual closings. Every client, every deadline.",
+    a4n:"Deadline Monitoring Agent", a4d:"Proactive management of tax filings and annual closings. Every client.",
     a5n:"Client Portal Chatbot", a5d:"Clients self-serve to check their status and documents.",
     ph1:"Phase I", ph1b:"Phase I", ph2:"Phase II", ph2b:"Phase II", ph3:"Phase III",
     extra_tog:"⚡ + More agents — click to view",
-    ec1c:"Sales", ec1n:"Enquiry Analyser", ec1d:"Automatic analysis and prioritisation of incoming enquiries.",
-    ec2c:"Reputation", ec2n:"Review Collector", ec2d:"Automated management of Google / Trustpilot reviews.",
-    ec3c:"Reporting", ec3n:"Monthly Report Agent", ec3d:"Automatic monthly summary for management.",
-    ec4c:"International", ec4n:"Translation Agent", ec4d:"Documents and proposals in 10 languages.",
+    ec1c:"Sales", ec1n:"Enquiry Analyser", ec1d:"Automatic analysis of incoming enquiries.",
+    ec2c:"Reputation", ec2n:"Review Collector", ec2d:"Automated Google / Trustpilot management.",
+    ec3c:"Reporting", ec3n:"Monthly Report Agent", ec3d:"Automatic monthly management summary.",
+    ec4c:"International", ec4n:"Translation Agent", ec4d:"Documents in 10 languages.",
     ec5c:"Marketing", ec5n:"Content Generator", ec5d:"LinkedIn posts, newsletters automatically.",
     ec6c:"Intelligence", ec6n:"Market Radar", ec6d:"Industry news and competitor monitoring.",
-    why_title:"Why AI agents?",
+    why_title:"Why an AI business management system?",
     w1b:"24/7 operation", w1:"nights and weekends too, no sick leave or holidays",
     w2b:"Scalable", w2:"handles 100 clients as well as one",
     w3b:"Learns and improves", w3:"gets smarter with every interaction",
     w4b:"GDPR compliant", w4:"data stays in your system",
     w5b:"Immediate results", w5:"first agents live within 2-3 weeks",
-    st1:"faster client management with automation",
-    st2:"of administrative tasks are automatable",
-    st3:"continuous operation — nights and weekends",
-    mod_ey:"Premium modules",
-    mod_h2:"Two modules <em>nobody else offers</em><br>in one package.",
-    mod_sub:"Alongside the AI agent system, you get two special modules — which deliver serious value to your clients on their own.",
-    esg_badge:"ESG Module", esg_title:"ESG Report AI",
-    esg_desc:"Automatic ESG report generation — which the EU will soon make mandatory for all businesses. Your clients will be among the first to be prepared.",
-    esg_f1:"<strong>Automatic report generation</strong> — ESG report ready in minutes based on company data",
-    esg_f2:"<strong>EU Taxonomy & CSRD compliance</strong> — automatic checks and recommendations",
-    esg_f3:"<strong>Digital certificate</strong> — downloadable, shareable ESG credential",
-    esg_f4:"<strong>Annual comparison</strong> — track and visualise progress over time",
-    esg_al_t:"⚠️ Why urgent?",
-    esg_al_d:"Under the CSRD directive, ESG reporting will become mandatory for more and more companies from 2025. Those who prepare now gain a competitive edge.",
-    ten_badge:"Grant Module", ten_title:"Grant Monitor AI",
-    ten_desc:"Real-time monitoring of Hungarian and EU grants — the AI automatically identifies which grants match each company and notifies before deadlines.",
-    ten_f1:"<strong>Hungarian grants</strong> — Széchenyi, GINOP, RRF, NTP and other domestic funds",
-    ten_f2:"<strong>EU grants</strong> — Horizon Europe, Cohesion Funds, Interreg and other EU programmes",
-    ten_f3:"<strong>AI matching</strong> — automatically determines which grant fits the company profile",
-    ten_f4:"<strong>Automatic alerts</strong> — email/SMS notification before deadlines, never miss a grant",
-    ten_al_t:"💡 How big is the opportunity?",
-    ten_al_d:"Hundreds of billions in grant funding are available annually. Most SMEs don't apply because they don't know in time what they're eligible for.",
-    mod_bar_t:"Both modules are <em>included</em> in the Business and Enterprise plans.",
+    st1:"faster client management<br>with the AI system", st2:"of administrative tasks<br>are automatable", st3:"continuous operation —<br>nights and weekends",
+    mod_ey:"AI Business Management System",
+    mod_h2:"3 modules <em>no other system offers</em><br>in one package.",
+    mod_sub:"The Interncomp AI Business Management System consists of 3 unique modules — unavailable in this integrated form elsewhere.",
+    win1_title:"AI Agent Module", win1_badge:"AI BUSINESS MANAGEMENT · MODULE 1", win1_name:"AI Agent System",
+    win1_desc:"The AI business management system's 5 agents fully handle lead management, document collection, deadline monitoring and client communication.",
+    win1_f1:"<strong>Lead Qualifier</strong> — instant response to every enquiry",
+    win1_f2:"<strong>Follow-up sequence</strong> — intelligent tracking",
+    win1_f3:"<strong>Document handling</strong> — automatic collection and verification",
+    win1_f4:"<strong>Deadline monitor</strong> — every client, every deadline",
+    win1_status:"Active — operating 24/7",
+    win2_title:"ESG Report Module", win2_badge:"AI BUSINESS MANAGEMENT · MODULE 2", win2_name:"ESG Report AI",
+    win2_desc:"The AI business management system's ESG module automatically generates EU-compliant reports. CSRD is mandatory from 2025 — Interncomp clients are first to comply.",
+    win2_f1:"<strong>Automatic report</strong> — ESG report ready in minutes",
+    win2_f2:"<strong>EU Taxonomy & CSRD</strong> — compliance guaranteed",
+    win2_f3:"<strong>Digital certificate</strong> — downloadable, shareable",
+    win2_f4:"<strong>Annual comparison</strong> — progress tracked",
+    win2_status:"Active — ESG database up to date",
+    win3_title:"Grant Monitor Module", win3_badge:"AI BUSINESS MANAGEMENT · MODULE 3", win3_name:"Grant Monitor AI",
+    win3_desc:"The AI business management system monitors all Hungarian and EU grants in real time and automatically matches them to the company profile.",
+    win3_f1:"<strong>Hungarian grants</strong> — Széchenyi, GINOP, RRF, NTP",
+    win3_f2:"<strong>EU grants</strong> — Horizon, Cohesion, Interreg",
+    win3_f3:"<strong>AI matching</strong> — which grant fits the company",
+    win3_f4:"<strong>Automatic alerts</strong> — notification before deadlines",
+    win3_status:"Active — grant monitoring continuous",
+    mod_bar_t:"All 3 modules are <em>included</em> in the Business and Enterprise plans.",
     mod_bar_btn:"View pricing →",
     why_ey:"Why now?",
-    why_h2:"Three reasons to <em>act</em><br>now.",
-    wc1l:"⏱ Time = money", wc1t:"An average SME spends <strong>8-12 hours per week</strong> on administration — which AI can reduce to minutes. That's hundreds of work hours saved per year.",
-    wc2l:"🏆 Grant funding", wc2t:"<strong>Hundreds of billions</strong> in grant funding are available annually — most companies don't apply because they don't know in time what they're eligible for.",
-    wc3l:"⚠️ ESG will be mandatory", wc3t:"Under CSRD, <strong>ESG reporting is becoming mandatory for more companies from 2025.</strong> Those who prepare now avoid penalties and gain a competitive edge.",
-    v1t:"Works immediately", v1d:"No long implementation — first agents live within 2-3 weeks.",
-    v2t:"Secure", v2d:"Data stays in your system — GDPR compliant solution.",
-    v3t:"Measurable results", v3d:"Monthly report — see exactly how many hours and money you've saved.",
-    v4t:"Personal support", v4d:"István Sinkó personally helps with onboarding and first steps.",
+    why_h2:"Three reasons the AI business management system <em>is needed now.</em>",
+    wc1l:"⏱ Time = money", wc1t:"The AI business management system eliminates <strong>8-12 hours per week</strong> of administration — hundreds of saved work hours per year.",
+    wc2l:"🏆 Grant funding", wc2t:"<strong>Hundreds of billions</strong> in grant funding are available annually. The AI business management system finds the right ones automatically.",
+    wc3l:"⚠️ ESG is mandatory", wc3t:"Under CSRD, <strong>ESG reporting is mandatory for more companies from 2025.</strong> The AI business management system fulfils this automatically.",
+    v1t:"Works immediately", v1d:"The AI business management system's first agents are live within 2-3 weeks.",
+    v2t:"Secure", v2d:"Data stays in your system — GDPR compliant.",
+    v3t:"Measurable results", v3d:"Monthly report on AI system performance.",
+    v4t:"Personal support", v4d:"István Sinkovicz personally helps with onboarding.",
     tb_title:"How much time will you save?",
     tb_r1:"Handling enquiries", tb_v1:"~4 hrs/wk",
     tb_r2:"Requesting documents", tb_v2:"~3 hrs/wk",
     tb_r3:"Monitoring deadlines", tb_v3:"~2 hrs/wk",
     tb_total:"Total per month", tb_vtotal:"~36 hrs",
     proc_ey:"The process",
-    proc_h2:"Four steps to a <em>working system.</em>",
-    proc_sub:"Fast, structured implementation — first results visible within 2-3 weeks.",
+    proc_h2:"Four steps to a <em>live AI business management system.</em>",
+    proc_sub:"First results of the AI business management system are visible within 2-3 weeks.",
     s1t:"Discovery", s1d:"Map existing processes and identify automation points.", s1tm:"~2 hours",
-    s2t:"MVP Development", s2d:"Build and test the first 2 agents with real data.", s2tm:"2–3 weeks",
+    s2t:"MVP Development", s2d:"Build and test the first 2 agents.", s2tm:"2–3 weeks",
     s3t:"Integration", s3d:"Connect to existing tools, onboarding and handover.", s3tm:"1 week",
-    s4t:"Scaling", s4d:"Expansion and partner client onboarding across the EU.", s4tm:"Ongoing",
+    s4t:"Scaling", s4d:"Expand the AI business management system and onboard partners.", s4tm:"Ongoing",
     pr_ey:"Investment",
-    pr_h2:"Monthly subscription, <em>measurable returns.</em>",
-    pr_sub:"No large upfront cost — start with a monthly subscription and offer to István Sinkó's clients immediately.",
+    pr_h2:"Monthly subscription — <em>the AI business management system starts immediately.</em>",
+    pr_sub:"The AI business management system is available immediately on a monthly subscription for István Sinkovicz's clients.",
     t1tier:"Entry", t1per:"/ mo · 2 agents", t1ann:"= €3,600 / year", t1cta:"Get started",
-    t2tier:"Most popular", t2per:"/ mo · 5 agents + modules", t2ann:"= €12,000 / year", t2cta:"I want this",
+    t2tier:"Most popular", t2per:"/ mo · 3 modules + 5 agents", t2ann:"= €12,000 / year", t2cta:"I want this",
     t3tier:"Full system", t3per:"/ mo · unlimited", t3ann:"All modules + dedicated support", t3cta:"Get in touch",
     billing:"Monthly subscription", billing2:"Monthly subscription", billing3:"Monthly subscription", featured:"Recommended",
     f_lead:"Lead Qualification Agent", f_fup:"Follow-up Agent", f_email:"Email integration", f_rep:"Monthly report", f_on:"Basic onboarding",
-    f_5ag:"5 AI agents", f_5ag2:"full stack",
+    f_5ag:"AI Agent System", f_5ag2:"full stack",
     f_esg:"🌱 ESG Report AI", f_esg2:"module",
     f_ten:"🔭 Grant Monitor AI", f_ten2:"module",
     f_crm:"CRM integration", f_sup:"Priority support",
@@ -833,25 +1000,22 @@ const T = {
     f_ten3:"🔭 Grant Monitor", f_ten4:"AI matching",
     f_dev:"Dedicated developer support",
     cta_ey:"Next step",
-    cta_h2:"Let's start <em>together.</em>",
-    cta_p:"Contact István Sinkovicz — after a short discussion you'll know exactly what the AI system can bring to your business.",
+    cta_h2:"The AI business management system <em>is ready.</em>",
+    cta_p:"Contact István Sinkovicz — the AI business management system can be launched in your business immediately after a short discussion.",
     cp_title:"Interncomp — Managing Director", ci_tel:"Phone", ci_email:"Email",
-    f_mid:"AI Business Management · 2025", f_right:"István Sinkovicz · +36 30 694 3931"
+    f_mid:"AI Business Management System · 2025", f_right:"István Sinkovicz · +36 30 694 3931"
   }
 };
 
-// ── LANG SWITCH ──
 let lang = 'hu';
 
 function setLang(l) {
   lang = l;
   const t = T[l];
-  // Update every element by id
   Object.keys(t).forEach(key => {
     const el = document.getElementById(key);
     if (el) el.innerHTML = t[key];
   });
-  // Update nav buttons
   document.querySelectorAll('.lang-btn-opt').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('onclick') === `setLang('${l}')`);
   });
@@ -874,6 +1038,38 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal,.rl,.rr,.stag').forEach(el => io.observe(el));
+
+// COUNTER ANIMATION
+function animateCounter(el, target, suffix) {
+  let start = 0;
+  const duration = 2000;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+    const current = Math.floor(eased * target);
+    el.firstChild.textContent = current;
+    if (progress < 1) requestAnimationFrame(step);
+    else el.firstChild.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const nums = entry.target.querySelectorAll('.counter-num[data-target]');
+      nums.forEach(el => {
+        const target = parseInt(el.dataset.target);
+        animateCounter(el, target, el.dataset.suffix);
+        el.removeAttribute('data-target');
+      });
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.counters-inner').forEach(el => counterObserver.observe(el));
 </script>
 </body>
 </html>
