@@ -336,6 +336,35 @@ h2 em{font-style:italic;color:var(--teal);}
 .pc.featured .pc-cta{background:var(--teal);border-color:var(--teal);color:white;}
 .pc.featured .pc-cta:hover{background:var(--teal2);}
 
+/* LEAD FORM */
+.lead-form-sec{background:var(--warm);padding:100px 48px;}
+.lead-form-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:48px;}
+.lead-form-why{display:flex;flex-direction:column;gap:16px;margin-top:8px;}
+.lfw-item{display:flex;align-items:flex-start;gap:12px;padding:16px 18px;background:white;border-radius:12px;border:1px solid var(--border);}
+.lfw-icon{font-size:22px;flex-shrink:0;}
+.lfw-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.lfw-desc{font-size:11px;color:var(--muted);line-height:1.6;}
+.lead-form-box{background:white;border-radius:16px;padding:36px;box-shadow:0 8px 40px var(--shadow);border:1px solid var(--border);}
+.lead-form-box h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.lf-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.lf-group{margin-bottom:16px;}
+.lf-label{display:block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--navy);margin-bottom:6px;}
+.lf-input,.lf-select,.lf-textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--navy);background:var(--cream);transition:border-color 0.2s;outline:none;}
+.lf-input:focus,.lf-select:focus,.lf-textarea:focus{border-color:var(--teal);background:white;}
+.lf-select{cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6a66' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.lf-textarea{resize:vertical;min-height:90px;}
+.lf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.lf-checks{display:flex;flex-direction:column;gap:8px;}
+.lf-check{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:12px;color:var(--muted);}
+.lf-check input{width:16px;height:16px;accent-color:var(--teal);cursor:pointer;flex-shrink:0;}
+.lf-submit{display:block;width:100%;padding:14px;background:var(--teal);color:white;border:none;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;margin-top:20px;}
+.lf-submit:hover{background:var(--teal2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,107,90,0.25);}
+.lf-note{font-size:10px;color:var(--muted);text-align:center;margin-top:10px;}
+.lf-success{display:none;text-align:center;padding:32px 20px;}
+.lf-success-icon{font-size:48px;margin-bottom:12px;}
+.lf-success-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.lf-success-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+
 /* CTA */
 .cta-sec{background:white;padding:120px 48px;text-align:center;position:relative;overflow:hidden;}
 .cta-glow{position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--teal-pale),transparent 70%);pointer-events:none;}
@@ -391,7 +420,8 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
   .counter-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.08);padding:20px 0;}
   .contact-card{flex-direction:column;}
   .contact-person{border-right:none;padding-right:0;border-bottom:1px solid var(--border);padding-bottom:16px;}
-  footer{flex-direction:column;text-align:center;}
+  .lead-form-wrap{grid-template-columns:1fr;}
+  .lf-row{grid-template-columns:1fr;}
   nav{top:56px;}
 }
 </style>
@@ -749,6 +779,119 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
   </div>
 </section>
 
+<!-- LEAD QUALIFICATION FORM -->
+<section class="lead-form-sec" id="ajanlat">
+  <div class="eyebrow" id="lf_ey">Gyors adatlap</div>
+  <h2 id="lf_h2">2 perc — és Sinkovicz István <em>pontosan tudja</em> hogyan segíthet.</h2>
+  <p class="sub" id="lf_sub">Töltse ki az alábbi rövid kérdőívet — így az első hívás rögtön az Ön vállalkozásának konkrét igényeiről szól, nem általános bemutatkozásról.</p>
+  <div class="lead-form-wrap reveal">
+
+    <!-- BAL OLDAL: MIÉRT ÉRDEMES -->
+    <div>
+      <div class="lead-form-why">
+        <div class="lfw-item"><div class="lfw-icon">⚡</div><div><div class="lfw-title" id="lfw1t">Azonnal személyre szabott ajánlat</div><div class="lfw-desc" id="lfw1d">Sinkovicz István az Ön iparágára és cégméretére szabott megoldással hívja vissza.</div></div></div>
+        <div class="lfw-item"><div class="lfw-icon">🎯</div><div><div class="lfw-title" id="lfw2t">Nincs felesleges kör</div><div class="lfw-desc" id="lfw2d">Egyből a lényegre térnek — melyik ügynök, melyik modul, milyen ütemben.</div></div></div>
+        <div class="lfw-item"><div class="lfw-icon">🔒</div><div><div class="lfw-title" id="lfw3t">Bizalmas, kötelezettség nélkül</div><div class="lfw-desc" id="lfw3d">Az adatokat nem adjuk tovább. Bármikor visszavonhatja érdeklődését.</div></div></div>
+        <div class="lfw-item"><div class="lfw-icon">📞</div><div><div class="lfw-title" id="lfw4t">24 órán belül visszahívás</div><div class="lfw-desc" id="lfw4d">Munkanap visszahívás garantált — Sinkovicz István személyesen egyeztet.</div></div></div>
+      </div>
+    </div>
+
+    <!-- JOBB OLDAL: FORM -->
+    <div>
+      <div class="lead-form-box">
+        <div id="lf-form-wrap">
+          <h3 id="lf_title">Ajánlatkérő adatlap</h3>
+          <p class="lf-sub" id="lf_subtitle">Kérjük töltse ki — 2 perc az egész.</p>
+
+          <div class="lf-row">
+            <div class="lf-group">
+              <label class="lf-label" id="lf_name_l">Neve *</label>
+              <input class="lf-input" id="lf_name" type="text" placeholder="Kovács János">
+            </div>
+            <div class="lf-group">
+              <label class="lf-label" id="lf_ceg_l">Cég neve *</label>
+              <input class="lf-input" id="lf_ceg" type="text" placeholder="Kovács Kft.">
+            </div>
+          </div>
+
+          <div class="lf-row">
+            <div class="lf-group">
+              <label class="lf-label" id="lf_tel_l">Telefonszám *</label>
+              <input class="lf-input" id="lf_tel" type="tel" placeholder="+36 30 ...">
+            </div>
+            <div class="lf-group">
+              <label class="lf-label" id="lf_email_l">Email cím</label>
+              <input class="lf-input" id="lf_email_inp" type="email" placeholder="email@ceg.hu">
+            </div>
+          </div>
+
+          <div class="lf-group">
+            <label class="lf-label" id="lf_ipar_l">Iparág / Tevékenység *</label>
+            <select class="lf-select" id="lf_ipar">
+              <option value="" id="lf_ipar_0">— Válasszon —</option>
+              <option id="lf_ipar_1">Könyvelés / Adótanácsadás</option>
+              <option id="lf_ipar_2">Cégeladás / M&A tanácsadás</option>
+              <option id="lf_ipar_3">Jogi / Ügyvédi iroda</option>
+              <option id="lf_ipar_4">Ingatlan</option>
+              <option id="lf_ipar_5">Kereskedelem / E-commerce</option>
+              <option id="lf_ipar_6">Gyártás / Termelés</option>
+              <option id="lf_ipar_7">Egyéb szolgáltatás</option>
+            </select>
+          </div>
+
+          <div class="lf-group">
+            <label class="lf-label" id="lf_meret_l">Cégméret</label>
+            <select class="lf-select" id="lf_meret">
+              <option value="" id="lf_meret_0">— Válasszon —</option>
+              <option id="lf_meret_1">1–5 fő</option>
+              <option id="lf_meret_2">6–20 fő</option>
+              <option id="lf_meret_3">21–50 fő</option>
+              <option id="lf_meret_4">50+ fő</option>
+            </select>
+          </div>
+
+          <div class="lf-group">
+            <label class="lf-label" id="lf_igeny_l">Mi érdekli legjobban? (több is választható)</label>
+            <div class="lf-checks">
+              <label class="lf-check"><input type="checkbox" value="ugynok"><span id="lf_c1">🤖 AI Ügynök Rendszer (Lead, Follow-up, Dokumentum)</span></label>
+              <label class="lf-check"><input type="checkbox" value="esg"><span id="lf_c2">🌱 ESG Jelentés AI modul</span></label>
+              <label class="lf-check"><input type="checkbox" value="palyazat"><span id="lf_c3">🔭 Pályázatfigyelő AI modul</span></label>
+              <label class="lf-check"><input type="checkbox" value="teljes"><span id="lf_c4">📦 Teljes AI vállalatirányítási rendszer</span></label>
+            </div>
+          </div>
+
+          <div class="lf-group">
+            <label class="lf-label" id="lf_prob_l">Legnagyobb jelenlegi probléma (opcionális)</label>
+            <textarea class="lf-textarea" id="lf_prob" placeholder="Pl. túl sok időt töltünk dokumentumok bekérésével..."></textarea>
+          </div>
+
+          <div class="lf-group">
+            <label class="lf-label" id="lf_csomag_l">Melyik csomag érdekli?</label>
+            <select class="lf-select" id="lf_csomag">
+              <option value="" id="lf_cs_0">— Válasszon —</option>
+              <option id="lf_cs_1">Starter — €300/hó</option>
+              <option id="lf_cs_2">Business — €1.000/hó</option>
+              <option id="lf_cs_3">Enterprise — €3.000/hó</option>
+              <option id="lf_cs_4">Még nem tudom</option>
+            </select>
+          </div>
+
+          <button class="lf-submit" onclick="submitLeadForm()" id="lf_btn">📩 Elküldöm — visszahívást kérek</button>
+          <p class="lf-note" id="lf_note">Az adatokat bizalmasan kezeljük · GDPR megfelelő · Kötelezettség nélkül</p>
+        </div>
+
+        <!-- SIKERES KÜLDÉS -->
+        <div class="lf-success" id="lf-success">
+          <div class="lf-success-icon">✅</div>
+          <div class="lf-success-title" id="lf_ok_title">Köszönjük!</div>
+          <div class="lf-success-desc" id="lf_ok_desc">Sinkovicz István 24 órán belül visszahívja Önt — felkészülve az Ön vállalkozásának konkrét igényeire.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- CTA / CONTACT -->
 <section class="cta-sec" id="contact">
   <div class="cta-glow"></div>
@@ -891,7 +1034,33 @@ const T = {
     cta_h2:"Az AI vállalatirányítási rendszer <em>készen áll.</em>",
     cta_p:"Lépjen kapcsolatba Sinkovicz Istvánnal — az AI vállalatirányítási rendszer azonnal elindítható az Ön vállalkozásában.",
     cp_title:"Interncomp — Ügyvezető", ci_tel:"Telefon", ci_email:"Email",
-    f_mid:"AI Vállalatirányítási Rendszer · 2025", f_right:"Sinkovicz István · +36 30 694 3931"
+    f_mid:"AI Vállalatirányítási Rendszer · 2025", f_right:"Sinkovicz István · +36 30 694 3931",
+    lf_ey:"Gyors adatlap",
+    lf_h2:"2 perc — és Sinkovicz István <em>pontosan tudja</em> hogyan segíthet.",
+    lf_sub:"Töltse ki az alábbi rövid kérdőívet — így az első hívás rögtön az Ön vállalkozásának konkrét igényeiről szól.",
+    lfw1t:"Azonnal személyre szabott ajánlat", lfw1d:"Sinkovicz István az Ön iparágára szabott megoldással hívja vissza.",
+    lfw2t:"Nincs felesleges kör", lfw2d:"Egyből a lényegre térnek — melyik ügynök, melyik modul, milyen ütemben.",
+    lfw3t:"Bizalmas, kötelezettség nélkül", lfw3d:"Az adatokat nem adjuk tovább. Bármikor visszavonhatja érdeklődését.",
+    lfw4t:"24 órán belül visszahívás", lfw4d:"Munkanap visszahívás garantált — Sinkovicz István személyesen egyeztet.",
+    lf_title:"Ajánlatkérő adatlap", lf_subtitle:"Kérjük töltse ki — 2 perc az egész.",
+    lf_name_l:"Neve *", lf_ceg_l:"Cég neve *", lf_tel_l:"Telefonszám *", lf_email_l:"Email cím",
+    lf_ipar_l:"Iparág / Tevékenység *",
+    lf_ipar_0:"— Válasszon —", lf_ipar_1:"Könyvelés / Adótanácsadás", lf_ipar_2:"Cégeladás / M&A tanácsadás",
+    lf_ipar_3:"Jogi / Ügyvédi iroda", lf_ipar_4:"Ingatlan", lf_ipar_5:"Kereskedelem / E-commerce",
+    lf_ipar_6:"Gyártás / Termelés", lf_ipar_7:"Egyéb szolgáltatás",
+    lf_meret_l:"Cégméret", lf_meret_0:"— Válasszon —",
+    lf_meret_1:"1–5 fő", lf_meret_2:"6–20 fő", lf_meret_3:"21–50 fő", lf_meret_4:"50+ fő",
+    lf_igeny_l:"Mi érdekli legjobban? (több is választható)",
+    lf_c1:"🤖 AI Ügynök Rendszer (Lead, Follow-up, Dokumentum)",
+    lf_c2:"🌱 ESG Jelentés AI modul", lf_c3:"🔭 Pályázatfigyelő AI modul",
+    lf_c4:"📦 Teljes AI vállalatirányítási rendszer",
+    lf_prob_l:"Legnagyobb jelenlegi probléma (opcionális)",
+    lf_csomag_l:"Melyik csomag érdekli?",
+    lf_cs_0:"— Válasszon —", lf_cs_1:"Starter — €300/hó", lf_cs_2:"Business — €1.000/hó",
+    lf_cs_3:"Enterprise — €3.000/hó", lf_cs_4:"Még nem tudom",
+    lf_btn:"📩 Elküldöm — visszahívást kérek",
+    lf_note:"Az adatokat bizalmasan kezeljük · GDPR megfelelő · Kötelezettség nélkül",
+    lf_ok_title:"Köszönjük!", lf_ok_desc:"Sinkovicz István 24 órán belül visszahívja Önt — felkészülve az Ön vállalkozásának konkrét igényeire."
   },
   en:{
     nav_esg:"🌱 ESG & Grants", nav_cta:"Contact",
@@ -1003,7 +1172,33 @@ const T = {
     cta_h2:"The AI business management system <em>is ready.</em>",
     cta_p:"Contact István Sinkovicz — the AI business management system can be launched in your business immediately after a short discussion.",
     cp_title:"Interncomp — Managing Director", ci_tel:"Phone", ci_email:"Email",
-    f_mid:"AI Business Management System · 2025", f_right:"István Sinkovicz · +36 30 694 3931"
+    f_mid:"AI Business Management System · 2025", f_right:"István Sinkovicz · +36 30 694 3931",
+    lf_ey:"Quick questionnaire",
+    lf_h2:"2 minutes — and István Sinkovicz <em>knows exactly</em> how to help.",
+    lf_sub:"Fill in the short form below — so the first call is about your business's specific needs, not a general introduction.",
+    lfw1t:"Instantly personalised proposal", lfw1d:"István Sinkovicz calls back with a solution tailored to your industry and size.",
+    lfw2t:"No wasted rounds", lfw2d:"Straight to the point — which agent, which module, at what pace.",
+    lfw3t:"Confidential, no obligation", lfw3d:"Your data is not shared. You can withdraw your interest at any time.",
+    lfw4t:"Callback within 24 hours", lfw4d:"Guaranteed weekday callback — István Sinkovicz speaks with you personally.",
+    lf_title:"Enquiry form", lf_subtitle:"Please fill in — takes 2 minutes.",
+    lf_name_l:"Your name *", lf_ceg_l:"Company name *", lf_tel_l:"Phone number *", lf_email_l:"Email address",
+    lf_ipar_l:"Industry / Activity *",
+    lf_ipar_0:"— Select —", lf_ipar_1:"Accounting / Tax advisory", lf_ipar_2:"Company sales / M&A advisory",
+    lf_ipar_3:"Legal / Law firm", lf_ipar_4:"Real estate", lf_ipar_5:"Trade / E-commerce",
+    lf_ipar_6:"Manufacturing / Production", lf_ipar_7:"Other services",
+    lf_meret_l:"Company size", lf_meret_0:"— Select —",
+    lf_meret_1:"1–5 people", lf_meret_2:"6–20 people", lf_meret_3:"21–50 people", lf_meret_4:"50+ people",
+    lf_igeny_l:"What interests you most? (multiple choice)",
+    lf_c1:"🤖 AI Agent System (Lead, Follow-up, Documents)",
+    lf_c2:"🌱 ESG Report AI module", lf_c3:"🔭 Grant Monitor AI module",
+    lf_c4:"📦 Full AI business management system",
+    lf_prob_l:"Biggest current challenge (optional)",
+    lf_csomag_l:"Which plan interests you?",
+    lf_cs_0:"— Select —", lf_cs_1:"Starter — €300/mo", lf_cs_2:"Business — €1,000/mo",
+    lf_cs_3:"Enterprise — €3,000/mo", lf_cs_4:"Not sure yet",
+    lf_btn:"📩 Submit — request a callback",
+    lf_note:"Data handled confidentially · GDPR compliant · No obligation",
+    lf_ok_title:"Thank you!", lf_ok_desc:"István Sinkovicz will call you back within 24 hours — prepared with solutions for your business's specific needs."
   }
 };
 
@@ -1039,7 +1234,37 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal,.rl,.rr,.stag').forEach(el => io.observe(el));
 
-// COUNTER ANIMATION
+// LEAD FORM SUBMIT
+function submitLeadForm() {
+  const name = document.getElementById('lf_name').value.trim();
+  const ceg = document.getElementById('lf_ceg').value.trim();
+  const tel = document.getElementById('lf_tel').value.trim();
+  const ipar = document.getElementById('lf_ipar').value;
+
+  if (!name || !ceg || !tel || !ipar) {
+    alert(lang === 'hu' ? 'Kérjük töltse ki a kötelező mezőket (*)!' : 'Please fill in the required fields (*)!');
+    return;
+  }
+
+  // Collect data
+  const checks = [...document.querySelectorAll('.lf-check input:checked')].map(c => c.value).join(', ');
+  const prob = document.getElementById('lf_prob').value;
+  const csomag = document.getElementById('lf_csomag').value;
+  const email = document.getElementById('lf_email_inp').value;
+  const meret = document.getElementById('lf_meret').value;
+
+  // Build mailto
+  const subject = encodeURIComponent(`Ajánlatkérés: ${name} — ${ceg}`);
+  const body = encodeURIComponent(
+    `Név: ${name}\nCég: ${ceg}\nTelefon: ${tel}\nEmail: ${email}\n\nIparág: ${ipar}\nCégméret: ${meret}\nErdeklődés: ${checks}\nCsomag: ${csomag}\n\nProbléma:\n${prob}`
+  );
+  window.location.href = `mailto:interncomp2013@gmail.com?subject=${subject}&body=${body}`;
+
+  // Show success
+  document.getElementById('lf-form-wrap').style.display = 'none';
+  document.getElementById('lf-success').style.display = 'block';
+}
+
 function animateCounter(el, target, suffix) {
   let start = 0;
   const duration = 2000;
