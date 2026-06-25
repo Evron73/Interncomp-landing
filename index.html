@@ -323,7 +323,7 @@ h2 em{font-style:italic;color:var(--teal);}
 .pc-value-callout{margin-top:10px;padding:10px 14px;background:linear-gradient(135deg,var(--teal-pale),rgba(240,201,106,0.08));border:1px solid rgba(26,107,90,0.15);border-radius:9px;font-size:11px;color:var(--teal);font-weight:600;text-align:center;}
 /* PRICING */
 .price-sec{background:var(--warm);}
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px;}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px;}
 .pc{background:white;border-radius:14px;padding:36px 32px;border:1.5px solid var(--border);position:relative;transition:all 0.3s;overflow:hidden;}
 .pc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--border);transition:background 0.3s;}
 .pc:hover{transform:translateY(-5px);box-shadow:0 20px 56px var(--shadow);border-color:var(--teal);}
@@ -432,6 +432,9 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
 .mkt-bar-btn{padding:11px 24px;background:var(--teal);color:white;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border-radius:7px;white-space:nowrap;transition:all 0.2s;}
 .mkt-bar-btn:hover{background:var(--teal2);}
 
+@media(max-width:1100px){
+  .price-grid{grid-template-columns:repeat(2,1fr);}
+}
 @media(max-width:900px){
   nav,section,.hero,.stats-bar,.cta-sec,footer,.compare-sec{padding-left:24px;padding-right:24px;}
   .hero,.two-col,.prob-grid,.mod-grid,.price-grid,.val-cards,.why-grid,.srv-intro,.srv-features-grid,.mkt-grid{grid-template-columns:1fr;}
@@ -990,16 +993,34 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
       </ul>
       <a href="#contact" class="pc-cta" id="t1cta">Kezdjük el</a>
     </div>
+    <div class="pc">
+      <div class="pc-tier" id="t15tier">Bővített</div>
+      <div class="pc-name">Basic+</div>
+      <div class="pc-billing" id="billing15">Havi előfizetés</div>
+      <div class="pc-amount"><sup>€</sup>900</div>
+      <div class="pc-period" id="t15per">/ hó · 3 ügynök + alap modulok</div>
+      <div class="pc-annual" id="t15ann">= €10.800 / év</div>
+      <div class="pc-div"></div>
+      <ul class="pc-features">
+        <li><strong id="f15_3ag">3 AI ügynök</strong></li>
+        <li id="f15_doc">📋 Dokumentum-összegyűjtő Ügynök</li>
+        <li id="f15_chat">💬 Iparági Chatbot</li>
+        <li id="f15_esg">🌱 ESG Jelentés AI modul</li>
+        <li id="f15_fin">💰 Pénzügyi AI csomag (alap)</li>
+        <li id="f15_rep">Heti riport</li>
+        <li id="f15_on">Bővített onboarding</li>
+      </ul>
+      <a href="#contact" class="pc-cta" id="t15cta">Ezt választom</a>
+    </div>
     <div class="pc featured">
       <div class="feat-badge" id="featured">Ajánlott</div>
       <div class="pc-new-badge">🚀 Marketing AI bővítve</div>
       <div class="pc-tier" id="t2tier">Legtöbbet választott</div>
       <div class="pc-name">Business</div>
       <div class="pc-billing" id="billing2">Havi előfizetés</div>
-      <div class="pc-amount-old" style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-top:10px;">€1.000 / hó</div>
-      <div class="pc-amount"><sup>€</sup>1.500</div>
+      <div class="pc-amount"><sup>€</sup>3.000</div>
       <div class="pc-period" id="t2per">/ hó · 5 ügynök + Marketing AI</div>
-      <div class="pc-annual" id="t2ann">= €18.000 / év</div>
+      <div class="pc-annual" id="t2ann">= €36.000 / év</div>
       <div class="pc-div"></div>
       <div class="pc-value-callout" id="t2_value">✦ Most tartalmazza: SEO AI + Google & Meta Ads AI</div>
       <ul class="pc-features">
@@ -1019,7 +1040,6 @@ footer{background:var(--navy);padding:32px 48px;display:flex;justify-content:spa
       <div class="pc-tier" id="t3tier">Teljes rendszer</div>
       <div class="pc-name">Enterprise</div>
       <div class="pc-billing" id="billing3">Havi előfizetés</div>
-      <div class="pc-amount-old" style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-top:10px;">€3.000 / hó</div>
       <div class="pc-amount"><sup>€</sup>4.500</div>
       <div class="pc-period" id="t3per">/ hó · korlátlan + tanácsadás</div>
       <div class="pc-annual" id="t3ann">Minden modul + dedikált support + Marketing AI</div>
@@ -1207,7 +1227,9 @@ const T = {
     pr_h2:"Havi előfizetés, <em>mérhető megtérülés.</em>",
     pr_sub:"Nincs nagy egyszeri beruházás — a Business és Enterprise csomagok most már a Marketing AI modult is tartalmazzák.",
     t1tier:"Belépő", t1per:"/ hó · 2 ügynök + chatbot", t1ann:"= €3.600 / év", t1cta:"Kezdjük el",
-    t2tier:"Legtöbbet választott", t2per:"/ hó · 5 ügynök + Marketing AI", t2ann:"= €18.000 / év", t2cta:"Ezt kérem",
+    t15tier:"Bővített", t15per:"/ hó · 3 ügynök + alap modulok", t15ann:"= €10.800 / év", t15cta:"Ezt választom", billing15:"Havi előfizetés",
+    f15_3ag:"3 AI ügynök", f15_doc:"📋 Dokumentum-összegyűjtő Ügynök", f15_chat:"💬 Iparági Chatbot", f15_esg:"🌱 ESG Jelentés AI modul", f15_fin:"💰 Pénzügyi AI csomag (alap)", f15_rep:"Heti riport", f15_on:"Bővített onboarding",
+    t2tier:"Legtöbbet választott", t2per:"/ hó · 5 ügynök + Marketing AI", t2ann:"= €36.000 / év", t2cta:"Ezt kérem",
     t3tier:"Teljes rendszer", t3per:"/ hó · korlátlan + tanácsadás", t3ann:"Minden modul + Marketing AI + dedikált support", t3cta:"Kapcsolatfelvétel",
     billing:"Havi előfizetés", billing2:"Havi előfizetés", billing3:"Havi előfizetés", featured:"Ajánlott",
     f_lead:"Lead Kvalifikáló Ügynök", f_fup:"Follow-up Ügynök", f_email:"Email integráció",
@@ -1387,7 +1409,9 @@ const T = {
     pr_h2:"Monthly subscription, <em>measurable returns.</em>",
     pr_sub:"No large upfront cost — Business and Enterprise plans now include the Marketing AI module.",
     t1tier:"Entry", t1per:"/ mo · 2 agents + chatbot", t1ann:"= €3,600 / year", t1cta:"Get started",
-    t2tier:"Most popular", t2per:"/ mo · 5 agents + Marketing AI", t2ann:"= €18,000 / year", t2cta:"I want this",
+    t15tier:"Extended", t15per:"/ mo · 3 agents + basic modules", t15ann:"= €10,800 / year", t15cta:"I want this", billing15:"Monthly subscription",
+    f15_3ag:"3 AI agents", f15_doc:"📋 Document Collection Agent", f15_chat:"💬 Industry Chatbot", f15_esg:"🌱 ESG Report AI module", f15_fin:"💰 Finance AI package (basic)", f15_rep:"Weekly report", f15_on:"Extended onboarding",
+    t2tier:"Most popular", t2per:"/ mo · 5 agents + Marketing AI", t2ann:"= €36,000 / year", t2cta:"I want this",
     t3tier:"Full system", t3per:"/ mo · unlimited + consulting", t3ann:"All modules + Marketing AI + dedicated support", t3cta:"Get in touch",
     billing:"Monthly subscription", billing2:"Monthly subscription", billing3:"Monthly subscription", featured:"Recommended",
     f_lead:"Lead Qualification Agent", f_fup:"Follow-up Agent", f_email:"Email integration",
